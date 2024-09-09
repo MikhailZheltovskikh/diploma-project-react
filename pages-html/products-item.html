@@ -1,0 +1,207 @@
+<style>
+	.breadcrumbs {
+		display: flex;
+		align-items: center;
+		padding: 0 10px;
+		height: 50px;
+		border-radius: 25px;
+		border: 1px solid #000000;
+	}
+
+	.breadcrumbs-list {
+		display: flex;
+		align-items: center;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.breadcrumbs-list li {
+		position: relative;
+		padding: 0 15px 0 8px;
+	}
+
+	.breadcrumbs-list li,
+	.breadcrumbs-list li a {
+		font-size: 16px;
+		line-height: 120%;
+		font-weight: 700;
+		color: #ffffff;
+		text-decoration: none;
+	}
+
+	.breadcrumbs-list li a:hover {
+		text-decoration: underline;
+	}
+
+	.breadcrumbs-list li::after {
+		content: '/';
+		position: absolute;
+		right: 0;
+		top: 0;
+		font-size: 16px;
+		line-height: 120%;
+		font-weight: 700;
+		color: #ffffff;
+	}
+
+	.breadcrumbs-list li:first-child {
+		padding-left: 0;
+	}
+
+	.breadcrumbs-list li:last-child {
+		padding-right: 0;
+	}
+
+	.breadcrumbs-list li:last-child::after {
+		display: none;
+	}
+
+	.product {
+		display: grid;
+		grid-template-columns: 500px auto;
+		gap: 35px;
+		margin-top: 40px;
+	}
+
+	.product-image {
+		padding: 20px;
+		width: 500px;
+		height: 400px;
+		border-radius: 35px;
+		background-color: #FFFFFF;
+	}
+
+	.product-image img{
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+	}
+
+	.product-content {
+		display: flex;
+		flex-direction: column;
+		row-gap: 24px;
+		width: 100%;
+	}
+
+	.product-title {
+		font-size: 22px;
+		line-height: normal;
+		font-weight: 700;
+		color: #FFFFFF;
+	}
+
+	.product-amount {
+		font-size: 16px;
+		line-height: 120%;
+		font-weight: 400;
+		color: #FFFFFF;
+	}
+
+	.product-characteristics {
+		display: flex;
+		flex-direction: column;
+		row-gap: 10px;
+		padding-left: 15px;
+		margin: 0;
+
+	}
+
+	.product-characteristics li{
+		font-size: 16px;
+		line-height: 120%;
+		font-weight: 400;
+		color: #FFFFFF;
+	}
+
+	.product-bottom {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		column-gap: 30px;
+	}
+
+	.product-price {
+		font-size: 30px;
+		line-height: normal;
+		font-weight: 700;
+		color: #FFCC00;
+	}
+
+	.product-buy {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 220px;
+		height: 50px;
+		font-size: 16px;
+		line-height: 1;
+		font-weight: 400;
+		color: #2A2A2A !important;
+		border-radius: 25px;
+		background-color: #FFCC00;
+		border: none;
+		text-decoration: none;
+		transition: all .2s ease;
+		cursor: pointer;
+	}
+
+	.product-buy:hover {
+		opacity: 0.7;
+	}
+
+	.product-line{
+		width: 100%;
+		height: 1px;
+		background-color: #fff;
+	}
+
+	.product-id {
+		max-width: max-content;
+		margin-left: auto;
+		font-size: 16px;
+		line-height: 120%;
+		font-weight: 400;
+		color: #FFFFFF;
+
+	}
+</style>
+<div class="container">
+	<div class="breadcrumbs">
+		<ul class="breadcrumbs-list">
+			<li><a href="">Главная</a></li>
+			<li><a href="">Ноутбуки и компьютеры</a></li>
+			<li><a href="">Ноутбуки</a></li>
+			<li>Huawei</li>
+		</ul>
+	</div>
+	<div class="product">
+		<div class="product-image"><img src="images/product-1.png" alt="" /></div>
+		<div class="product-content">
+			<div class="product-title">
+				Ноутбук Huawei MateBook 14 FlemingH 53014APJ, 14", 2024, OLED, Intel Core
+				Ultra 5 125H 1.2ГГц, 14-ядерный, 16ГБ 512ГБ SSD, Intel Arc, Windows 11
+				Home, серый
+			</div>
+			<div class="product-amount">Количество: 15 шт.</div>
+			<ul class="product-characteristics">
+				<li>Экран: 14 "; 2880х1920; OLED;</li>
+				<li>
+					Процессор: Intel Core Ultra 5 125H 1.2 ГГц (4.5 ГГц, в режиме Turbo)
+				</li>
+				<li>Графический процессор: Intel Arc;</li>
+				<li>Оперативная память: 16 ГБ;</li>
+				<li>Диск: SSD 512 ГБ;</li>
+				<li>Операционная система: Windows 11 Home;</li>
+				<li>Клавиатура: с русскими буквами</li>
+			</ul>
+			<div class="product-bottom">
+				<div class="product-price">104 350₽</div>
+				<button class="product-buy">Купить</button>
+			</div>
+			<div class="product-line"></div>
+			<div class="product-id">Id товара: 2023519</div>
+		</div>
+	</div>
+</div>

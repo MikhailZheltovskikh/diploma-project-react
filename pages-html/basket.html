@@ -1,0 +1,427 @@
+<link
+	href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+	rel="stylesheet"
+/>
+
+<style>
+	*,
+	*::after,
+	*::after {
+		font-family: 'Ubuntu', sans-serif;
+		box-sizing: border-box;
+	}
+
+	body {
+		background-attachment: fixed;
+		background: url(images/bg.png) center/cover no-repeat;
+	}
+
+	.container {
+		max-width: 1224px;
+		width: 100%;
+		padding: 0 10px;
+		margin: 0 auto;
+	}
+</style>
+<style>
+	header {
+		padding: 30px 0;
+	}
+
+	.header__inner {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		column-gap: 20px;
+	}
+
+	.logo {
+		display: flex;
+		align-items: center;
+		column-gap: 20px;
+	}
+
+	.logo-desc {
+		font-size: 16px;
+		line-height: normal;
+		font-weight: 400;
+		color: #ffffff;
+	}
+
+	.header-buttons a {
+		padding: 16px 30px;
+		margin: 0 auto;
+		margin-top: 40px;
+		font-size: 16px;
+		line-height: 16px;
+		font-weight: 400;
+		color: #2a2a2a;
+		background-color: #ffcc00;
+		border: none;
+		border-radius: 25px;
+		text-decoration: none;
+		cursor: pointer;
+		transition: all 0.2s ease;
+	}
+
+	.header-buttons a:hover {
+		opacity: 0.7;
+	}
+</style>
+<header>
+	<div class="container">
+		<div class="header__inner">
+			<div class="logo">
+				<a href="/">
+					<img src="images/logo.png" alt="" />
+				</a>
+
+				<div class="logo-desc">Магазин цифровой и бытовой техники</div>
+			</div>
+			<div class="header-buttons">
+				<a href="">Вход</a>
+			</div>
+		</div>
+	</div>
+</header>
+
+<style>
+	.breadcrumbs {
+		display: flex;
+		align-items: center;
+		padding: 0 10px;
+		height: 50px;
+		border-radius: 25px;
+		border: 1px solid #000000;
+	}
+
+	.breadcrumbs-list {
+		display: flex;
+		align-items: center;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.breadcrumbs-list li {
+		position: relative;
+		padding: 0 15px 0 8px;
+	}
+
+	.breadcrumbs-list li,
+	.breadcrumbs-list li a {
+		font-size: 16px;
+		line-height: 120%;
+		font-weight: 700;
+		color: #ffffff;
+		text-decoration: none;
+	}
+
+	.breadcrumbs-list li a:hover {
+		text-decoration: underline;
+	}
+
+	.breadcrumbs-list li::after {
+		content: '/';
+		position: absolute;
+		right: 0;
+		top: 0;
+		font-size: 16px;
+		line-height: 120%;
+		font-weight: 700;
+		color: #ffffff;
+	}
+
+	.breadcrumbs-list li:first-child {
+		padding-left: 0;
+	}
+
+	.breadcrumbs-list li:last-child {
+		padding-right: 0;
+	}
+
+	.breadcrumbs-list li:last-child::after {
+		display: none;
+	}
+
+	.basekt {
+		margin-top: 40px;
+		display: grid;
+		grid-template-columns: auto 260px;
+		gap: 40px;
+	}
+
+	.basekt-content {
+		display: flex;
+		flex-direction: column;
+		row-gap: 40px;
+	}
+
+	.product-card {
+		display: grid;
+		grid-template-columns: 200px auto;
+		align-items: center;
+		column-gap: 35px;
+	}
+
+	.product-card__image {
+		width: 200px;
+		height: 140px;
+		flex-shrink: 0;
+		padding: 15px;
+		background-color: #fff;
+		border-radius: 35px;
+	}
+
+	.product-card__image img {
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+	}
+
+	.product-card__content {
+		display: flex;
+		flex-direction: column;
+		row-gap: 24px;
+	}
+
+	.product-card__top {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		column-gap: 30px;
+	}
+
+	.product-card__id {
+		font-size: 22px;
+		line-height: normal;
+		font-weight: 700;
+		color: #ffffff;
+	}
+
+	.delete {
+		width: 24px;
+		height: 24px;
+		padding: 0;
+		border: none;
+		border-radius: 50%;
+		background:
+			url("data:image/svg+xml,%3Csvg width='9' height='10' viewBox='0 0 9 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='0.353553' y1='1.14645' x2='8.35355' y2='9.14645' stroke='black'/%3E%3Cline x1='8.35355' y1='0.853553' x2='0.353554' y2='8.85355' stroke='black'/%3E%3C/svg%3E%0A")
+				center/auto no-repeat,
+			#ffcc00;
+		cursor: pointer;
+		transition: all 0.2s ease;
+	}
+
+	.delete:hover {
+		opacity: 0.7;
+	}
+
+	.product-card__line {
+		height: 1px;
+		width: 100%;
+		background-color: #fff;
+	}
+
+	.product-card__box {
+		display: grid;
+		grid-template-columns: 300px 150px 150px;
+		justify-content: space-between;
+		align-items: center;
+		column-gap: 20px;
+	}
+
+	.product-card__title {
+		font-size: 16px;
+		line-height: 120%;
+		font-weight: 400;
+		color: #ffffff;
+	}
+
+	.product-card__amount {
+		font-size: 16px;
+		line-height: 120%;
+		font-weight: 400;
+		color: #ffffff;
+	}
+
+	.product-card__price {
+		font-size: 30px;
+		line-height: normal;
+		font-weight: 700;
+		color: #ffcc00;
+		white-space: nowrap;
+		text-align: right;
+	}
+
+	.basekt-aside {
+		background-color: #fff;
+		border: 2px solid #ffffff;
+		border-radius: 35px;
+		padding-bottom: 25px;
+		height: max-content;
+	}
+
+	.basekt-aside__title {
+		height: 70px;
+		display: flex;
+		align-items: center;
+		padding-left: 40px;
+		font-size: 22px;
+		line-height: 1;
+		font-weight: 700;
+		color: #ffffff;
+		background-color: #737373;
+		border-radius: 35px;
+	}
+
+	.basekt-aside__amount {
+		padding: 0 20px;
+		margin-top: 35px;
+		font-size: 16px;
+		line-height: 120%;
+		font-weight: 400;
+		color: #000000;
+	}
+
+	.basekt-aside__line {
+		height: 1px;
+		width: calc(100% - 40px);
+		margin: 0 auto;
+		margin-top: 35px;
+		background-color: #000;
+	}
+
+	.basekt-aside__price-box {
+		padding: 0 20px;
+		margin-top: 20px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		column-gap: 10px;
+	}
+
+	.basekt-aside__price {
+		font-size: 30px;
+		line-height: normal;
+		font-weight: 700;
+		color: #ffcc00;
+	}
+
+	.basekt-aside__price-title {
+		font-size: 16px;
+		line-height: 120%;
+		font-weight: 700;
+		color: #000000;
+	}
+
+	.basekt-aside__order {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin: 0 auto;
+		margin-top: 20px;
+		width: calc(100% - 40px);
+		height: 50px;
+		font-size: 16px;
+		line-height: 1;
+		font-weight: 400;
+		color: #2a2a2a !important;
+		border-radius: 25px;
+		border: none;
+		background-color: #ffcc00;
+		transition: all 0.2s ease;
+		cursor: pointer;
+		text-decoration: none;
+	}
+
+	.basekt-aside__order:hover {
+		opacity: 0.7;
+	}
+</style>
+<div class="container">
+	<div class="breadcrumbs">
+		<ul class="breadcrumbs-list">
+			<li><a href="">Главная</a></li>
+			<li><a href="">Ноутбуки и компьютеры</a></li>
+			<li><a href="">Ноутбуки</a></li>
+			<li>Huawei</li>
+		</ul>
+	</div>
+	<div class="basekt">
+		<div class="basekt-content">
+			<div class="product-card">
+				<div class="product-card__image">
+					<img src="images/product-1.png" alt="" />
+				</div>
+				<div class="product-card__content">
+					<div class="product-card__top">
+						<div class="product-card__id">Id товара: 2023519</div>
+						<button class="delete"></button>
+					</div>
+
+					<div class="product-card__line"></div>
+					<div class="product-card__box">
+						<div class="product-card__title">
+							Ноутбук Huawei MateBook 14, серый
+						</div>
+						<div class="product-card__amount">Количество: 1 шт.</div>
+						<div class="product-card__price">104 350₽</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="product-card">
+				<div class="product-card__image">
+					<img src="images/product-1.png" alt="" />
+				</div>
+				<div class="product-card__content">
+					<div class="product-card__top">
+						<div class="product-card__id">Id товара: 2023519</div>
+						<button class="delete"></button>
+					</div>
+
+					<div class="product-card__line"></div>
+					<div class="product-card__box">
+						<div class="product-card__title">
+							Ноутбук Huawei MateBook 14, серый
+						</div>
+						<div class="product-card__amount">Количество: 1 шт.</div>
+						<div class="product-card__price">104 350₽</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="product-card">
+				<div class="product-card__image">
+					<img src="images/product-1.png" alt="" />
+				</div>
+				<div class="product-card__content">
+					<div class="product-card__top">
+						<div class="product-card__id">Id товара: 2023519</div>
+						<button class="delete"></button>
+					</div>
+
+					<div class="product-card__line"></div>
+					<div class="product-card__box">
+						<div class="product-card__title">
+							Ноутбук Huawei MateBook 14, серый
+						</div>
+						<div class="product-card__amount">Количество: 1 шт.</div>
+						<div class="product-card__price">104 350₽</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="basekt-aside">
+			<div class="basekt-aside__title">В корзине</div>
+			<div class="basekt-aside__amount">3 товара</div>
+			<div class="basekt-aside__line"></div>
+			<div class="basekt-aside__price-box">
+				<div class="basekt-aside__price-title">Итого:</div>
+				<div class="basekt-aside__price">104 350₽</div>
+			</div>
+			<button class="basekt-aside__order">Оформить заказ</button>
+		</div>
+	</div>
+</div>

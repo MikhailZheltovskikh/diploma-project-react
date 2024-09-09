@@ -1,0 +1,139 @@
+<link
+	href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+	rel="stylesheet"
+/>
+
+<style>
+	*,
+	*::after,
+	*::after {
+		font-family: 'Ubuntu', sans-serif;
+		box-sizing: border-box;
+	}
+
+	body {
+		background-attachment: fixed;
+		background: url(images/bg.png) center/cover no-repeat;
+	}
+
+	.container {
+		max-width: 1224px;
+		width: 100%;
+		padding: 0 10px;
+		margin: 0 auto;
+	}
+</style>
+<style>
+	header {
+		padding: 30px 0;
+	}
+
+	.header__inner {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		column-gap: 20px;
+	}
+
+	.logo {
+		display: flex;
+		align-items: center;
+		column-gap: 20px;
+	}
+
+	.logo-desc {
+		font-size: 16px;
+		line-height: normal;
+		font-weight: 400;
+		color: #ffffff;
+	}
+
+	.header-buttons a {
+		padding: 16px 30px;
+		margin: 0 auto;
+		margin-top: 40px;
+		font-size: 16px;
+		line-height: 16px;
+		font-weight: 400;
+		color: #2a2a2a;
+		background-color: #ffcc00;
+		border: none;
+		border-radius: 25px;
+		text-decoration: none;
+		cursor: pointer;
+		transition: all 0.2s ease;
+	}
+
+	.header-buttons a:hover {
+		opacity: 0.7;
+	}
+</style>
+<header>
+	<div class="container">
+		<div class="header__inner">
+			<div class="logo">
+				<a href="/">
+					<img src="../pages-html/images/logo.png" alt="" />
+				</a>
+
+				<div class="logo-desc">Магазин цифровой и бытовой техники</div>
+			</div>
+			<div class="header-buttons">
+				<a href="">Вход</a>
+			</div>
+		</div>
+	</div>
+</header>
+
+<div class="admin-panel">
+	Админ панель
+	<ul class="admin-panel__list">
+		<li></li>
+	</ul>
+</div>
+
+<style>
+	.admin-panel {
+		position: relative;
+	}
+
+
+	.admin-panel__list {
+		position: absolute;
+		left: 0;
+		top: 100%;
+		display: flex;
+		flex-direction: column;
+		row-gap: 10px;
+		padding: 10px;
+		border-radius: 10px;
+		background-color: #fff;
+		opacity: 0;
+		visibility: hidden;
+		z-index: -1;
+		transition: all .2s ease;
+	}
+
+	.admin-panel:hover .admin-panel__list{
+		opacity: 1;
+		visibility: visible;
+		z-index: 2;
+	}
+
+	.admin-panel__list a {
+		font-size: 16px;
+		line-height: 120%;
+		font-weight: 400;
+		color: #000 !important;
+	}
+
+	.admin-panel__list li{
+		display: flex;
+		align-items: center;
+		column-gap: 10px;
+	}
+
+	.admin-panel__list a:hover{
+		text-decoration: underline;
+	}
+</style>

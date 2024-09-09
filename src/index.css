@@ -1,0 +1,32 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+*,
+*::after,
+*::before {
+	box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	font-family: "Ubuntu", sans-serif;
+	background-attachment: fixed;
+	background: url(../pages-html/images/bg.png) center/cover no-repeat;
+	background-attachment: fixed;
+}
+
+code {
+	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+img {
+	display: block;
+}

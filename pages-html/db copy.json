@@ -1,0 +1,121 @@
+{
+  "users": [
+    {
+      "id": "001",
+      "login": "misha",
+      "password": "123456",
+      "registed_at": "2024-05-12",
+      "role_id": 0
+    },
+    {
+      "login": "ivan5",
+      "password": "123456",
+      "registed_at": "2057-08-24 09:23",
+      "role_id": 1,
+      "id": "C1Ph3pg"
+    }
+  ],
+  "roles": [
+    {
+      "id": 0,
+      "name": "Администратор"
+    },
+    {
+      "id": 1,
+      "name": "Модератор"
+    },
+    {
+      "id": 2,
+      "name": "Читатель"
+    }
+  ],
+  "products": [
+    {
+      "id": "001",
+      "title": "Ноутбук Lenovo IdeaPad 1 15IGL7 серый",
+      "group": "Ноутбуки",
+      "image_url": "https://c.dns-shop.ru/thumb/st1/fit/500/500/53b59a22a6b67baba9aa87f0003daaa4/2e500f9d78b98f9a80d9e0d6db6142ca82821d99cf73dd7d1a3b771f4e079e2f.jpg.webp",
+      "description": "1920x1080, IPS, Intel Celeron N4020, ядра: 2 х 1.1 ГГц, RAM 8 ГБ, SSD 256 ГБ, Intel UHD Graphics 600, без ОС",
+      "price": "44350",
+      "amount": "110"
+    },
+    {
+      "id": "002",
+      "title": "Ноутбук Lenovo V15 G2 IJL черный",
+      "group": "Ноутбуки",
+      "image_url": "https://c.dns-shop.ru/thumb/st1/fit/500/500/265e7a8eb7ab888f32dfca405654bb5f/2bc0f018a78836d2381a96179a23e8d26b622a5200b0fd5c0f64cac153c83e1e.jpg.webp",
+      "description": "1920x1080, TN, Intel Celeron N4500, ядра: 2 х 1.1 ГГц, RAM 4 ГБ, SSD 256 ГБ, Intel UHD Graphics, без ОС",
+      "price": "89910",
+      "amount": "201"
+    },
+    {
+      "id": "003",
+      "title": "Смартфон Xiaomi Redmi A3x 64 ГБ черный",
+      "group": "Смартфоны",
+      "image_url": "https://c.dns-shop.ru/thumb/st1/fit/500/500/0625bcdb4284baef662d0173e9ff7eac/9b40d8cd4c2fc9e1a262bf7a1be9f7a8be7150a09fc3d9a09fde79ebbb1fe35a.jpg.webp",
+      "description": "ядер - 8x(1.8 ГГц), 3 ГБ, 2 SIM, IPS, 1650x720, камера 8+0.08 Мп, 4G, GPS, FM, 5000 мА*ч",
+      "price": "6999",
+      "amount": "39"
+    },
+    {
+      "id": "004",
+      "title": "Холодильник многодверный Sharp SJWX99ABK черный",
+      "group": "Холодильники",
+      "image_url": "https://c.dns-shop.ru/thumb/st1/fit/500/500/1615070911ca98e712e167f4403165bb/7b0e3378dd516f4489f9cba12ceb54908bf9e800754e94fbbb07272cb64da0e1.png.webp",
+      "description": "650 л, внешнее покрытие-стекло, размораживание - No Frost, дисплей, 90.8 см х 185 см х 79.6 см",
+      "price": "399500",
+      "amount": "4"
+    },
+    {
+      "id": "005",
+      "title": "Стиральная машина LG F2J3NS1W белый",
+      "group": "Стиральные машины",
+      "image_url": "https://c.dns-shop.ru/thumb/st1/fit/500/500/ea7cf56724c2a0b1081f8a31ae9b327d/291a1b665e0bff04ae342dc7b6556574b7c28b99b0f05d2025797a13a0320509.jpg.webp",
+      "description": "стирка - 6 кг, фронтальная загрузка, отжим - 1200 об/мин, программ - 10, пар, 55 дБ, 60 см x 85 см x 44 см - 49 см",
+      "price": "35000",
+      "amount": "5"
+    }
+  ],
+  "groups": [
+    {
+      "id": "01",
+      "name": "Холодильники"
+    },
+    {
+      "id": "02",
+      "name": "Стиральные машины"
+    },
+    {
+      "id": "03",
+      "name": "Ноутбук"
+    },
+    {
+      "id": "04",
+      "name": "Смартфоны"
+    }
+  ],
+  "sessions": [
+    {
+      "hash": "0.28873756940390005176766408112598583102226257324219",
+      "user": {
+        "id": "001",
+        "login": "misha",
+        "password": "123456",
+        "registeredAt": "2024-05-12",
+        "roleId": 0
+      },
+      "id": 1
+    },
+    {
+      "hash": "0.33003755584493399410916936176363378763198852539063",
+      "user": {
+        "id": "001",
+        "login": "misha",
+        "password": "123456",
+        "registeredAt": "2024-05-12",
+        "roleId": 0
+      },
+      "id": 2
+    }
+  ]
+}
