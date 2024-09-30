@@ -6,15 +6,14 @@ import {
 } from '../../components';
 import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useServerRequest } from '../../hooks';
 import { debonce } from '../../utils';
 import { getLastPageFromLinks } from '../../components/pagination/utils';
-import { PAGINATION_LIMIT } from '../../bff/constans';
+
 import { ProductsCard } from '../main/ui';
 import styled from 'styled-components';
 
 const CatalogContainer = ({ className }) => {
-	const requestServer = useServerRequest();
+
 	const params = useParams();
 
 	const [products, setProducts] = useState([]);
@@ -47,22 +46,22 @@ const CatalogContainer = ({ className }) => {
 		// 	},
 		// );
 
-		Promise.all([
-			requestServer('fetchProducts', searchPhrase, page, PAGINATION_LIMIT,  selectedGroupId),
-			requestServer('fetchGroups'),
-		]).then(
-			([
-				{
-					res: { products, links },
-				},
-				groupsRes,
-			]) => {
-				setLastPage(getLastPageFromLinks(links));
-				setProducts(products);
-				setGroups(groupsRes.res);
-			},
-		);
-	}, [requestServer, page, shouldSearch]);
+	// 	Promise.all([
+	// 		requestServer('fetchProducts', searchPhrase, page, PAGINATION_LIMIT,  selectedGroupId),
+	// 		requestServer('fetchGroups'),
+	// 	]).then(
+	// 		([
+	// 			{
+	// 				res: { products, links },
+	// 			},
+	// 			groupsRes,
+	// 		]) => {
+	// 			setLastPage(getLastPageFromLinks(links));
+	// 			setProducts(products);
+	// 			setGroups(groupsRes.res);
+	// 		},
+	// 	);
+	}, [page, shouldSearch]);
 
 	const startDelaySearch = useMemo(() => debonce(setShouldSearch, 2000), []);
 

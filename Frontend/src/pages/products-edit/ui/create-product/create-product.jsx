@@ -8,19 +8,17 @@ import {
 	TextBlock,
 } from '../../../../components';
 import { CreateRow } from './ui';
-import { useServerRequest } from '../../../../hooks';
 import styled from 'styled-components';
 import { request } from '../../../../utils';
 
 const CreateProductContainer = ({ className, handleCloseModal, createHandleSubmit }) => {
-	const requestServer = useServerRequest();
 	const [groups, setGroups] = useState([]);
 
 	useEffect(() => {
 		request('/groups').then(({ data: dataGroups }) => {
 			setGroups(dataGroups);
 		});
-	}, [requestServer]);
+	}, []);
 
 	const [titleValue, setTitleValue] = useState('');
 	const [groupValue, setGroupValue] = useState('');

@@ -7,8 +7,6 @@ import {
 	TextBlock,
 } from '../../components';
 import { GroupRow, TableRow } from './ui';
-
-import { checkAccess } from '../../bff/utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUserRole } from '../../selectors';
 import { ROLE } from '../../constans';
@@ -28,9 +26,6 @@ const GroupsEditContainer = ({ className }) => {
 	const userRole = useSelector(selectUserRole);
 
 	useEffect(() => {
-		if (!checkAccess([ROLE.ADMIN], userRole)) {
-			return;
-		}
 		request('/groups').then((groupsRes) => setGroups(groupsRes.data));
 	}, [shouldUpdateGroupList, userRole]);
 
@@ -43,10 +38,6 @@ const GroupsEditContainer = ({ className }) => {
 	};
 
 	const onGroupRemove = (groupId) => {
-		if (!checkAccess([ROLE.ADMIN], userRole)) {
-			return;
-		}
-
 		dispatch(
 			openModal({
 				text: 'Удалить группу?',

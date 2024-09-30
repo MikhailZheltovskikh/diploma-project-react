@@ -9,20 +9,17 @@ import {
 	TextBlock,
 } from '../../components';
 import { ProductRow, TableRow } from './ui';
-import { useServerRequest } from '../../hooks';
-import { checkAccess } from '../../bff/utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUserRole } from '../../selectors';
-import { ROLE } from '../../constans';
+import { PAGINATION_LIMIT, ROLE } from '../../constans';
 import { CLOSE_MODAL, openModal } from '../../action';
 import styled from 'styled-components';
 import { CreateProduct } from './ui/create-product/create-product';
-import { PAGINATION_LIMIT } from '../../bff/constans';
 import { debonce, request } from '../../utils';
 
 const ProductsEditContainer = ({ className }) => {
 	const dispatch = useDispatch();
-	const requestServer = useServerRequest();
+
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const [products, setProducts] = useState([]);
@@ -38,10 +35,6 @@ const ProductsEditContainer = ({ className }) => {
 	const [shouldSearch, setShouldSearch] = useState(false);
 
 	useEffect(() => {
-		if (!checkAccess([ROLE.ADMIN], userRole)) {
-			return;
-		}
-
 		Promise.all([
 			request(
 				`/products?search=${searchPhrase}&page=${page}&limit=${PAGINATION_LIMIT}`,
@@ -70,9 +63,7 @@ const ProductsEditContainer = ({ className }) => {
 	};
 
 	const onProductsRemove = (productsId) => {
-		if (!checkAccess([ROLE.ADMIN], userRole)) {
-			return;
-		}
+
 
 		dispatch(
 			openModal({

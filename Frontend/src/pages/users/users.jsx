@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import { ROLE } from '../../constans';
 import { useSelector } from 'react-redux';
 import { selectUserRole } from '../../selectors';
-import { checkAccess } from '../../bff/utils';
 import { request } from '../../utils';
 
 const UsersContainer = ({ className }) => {
@@ -15,12 +14,7 @@ const UsersContainer = ({ className }) => {
 	const [shouldUpdateUserList, setShouldUpdateUserList] = useState(false);
 	const userRole = useSelector(selectUserRole);
 
-
 	useEffect(() => {
-		if (!checkAccess([ROLE.ADMIN], userRole)) {
-			return;
-		}
-
 		Promise.all([request('/users'), request('/users/roles')]).then(
 			([usersRes, rolesRes]) => {
 				if (usersRes.error || rolesRes.error) {
@@ -35,10 +29,6 @@ const UsersContainer = ({ className }) => {
 	}, [shouldUpdateUserList, userRole]);
 
 	const onUserRemove = (userId) => {
-		if (!checkAccess([ROLE.ADMIN], userRole)) {
-			return;
-		}
-
 		request(`/users/${userId}`, 'DELETE').then(() => {
 			setShouldUpdateUserList(!shouldUpdateUserList);
 		});
