@@ -5,12 +5,15 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
-import { setUser } from '../../action';
-import { selectUserRole } from '../../selectors';
+
 import { ROLE } from '../../constans';
 import styled from 'styled-components';
 import { useResetForm } from '../../hooks';
 import { request } from '../../utils';
+
+import { setUser } from '../../redux/action';
+import { selectUserRole } from '../../redux/selectors';
+
 
 const regFormSchema = yup.object().shape({
 	login: yup

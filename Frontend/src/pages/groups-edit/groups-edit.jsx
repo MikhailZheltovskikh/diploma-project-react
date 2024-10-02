@@ -3,31 +3,35 @@ import {
 	Button,
 	ContentContainer,
 	H2,
+	Loader,
 	PrivateContent,
 	TextBlock,
 } from '../../components';
 import { GroupRow, TableRow } from './ui';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectUserRole } from '../../selectors';
+import { selectGroups } from '../../redux/selectors';
 import { ROLE } from '../../constans';
-import { CLOSE_MODAL, openModal } from '../../action';
+import {
+	addGroupAsync,
+	CLOSE_MODAL,
+	editGroupAsync,
+	getGroups,
+	openModal,
+	removeGroupAsync,
+} from '../../redux/action';
 import styled from 'styled-components';
 import { CreateGroup } from './ui/create-group/create-group';
-import { request } from '../../utils';
 
 const GroupsEditContainer = ({ className }) => {
 	const dispatch = useDispatch();
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
-	const [groups, setGroups] = useState([]);
-
-	const [shouldUpdateGroupList, setShouldUpdateGroupList] = useState(false);
-	const userRole = useSelector(selectUserRole);
+	const { groups, isLoading } = useSelector(selectGroups);
 
 	useEffect(() => {
-		request('/groups').then((groupsRes) => setGroups(groupsRes.data));
-	}, [shouldUpdateGroupList, userRole]);
+		dispatch(getGroups());
+	}, [dispatch]);
 
 	const handleOpenModal = () => {
 		setIsModalOpen(true);
@@ -42,10 +46,7 @@ const GroupsEditContainer = ({ className }) => {
 			openModal({
 				text: 'Удалить группу?',
 				onConfirm: () => {
-					request(`/groups/${groupId}`, 'DELETE').then(() => {
-						setShouldUpdateGroupList(!shouldUpdateGroupList);
-					});
-
+					dispatch(removeGroupAsync(groupId));
 					dispatch(CLOSE_MODAL);
 				},
 				onCancel: () => dispatch(CLOSE_MODAL),
@@ -58,9 +59,7 @@ const GroupsEditContainer = ({ className }) => {
 			openModal({
 				text: 'Сохранить изменения?',
 				onConfirm: () => {
-					request(`/groups/${saveGroupData.id}`, "PATCH", {name: saveGroupData.name}).then(() => {
-						setShouldUpdateGroupList(!shouldUpdateGroupList);
-					});
+					dispatch(editGroupAsync(saveGroupData));
 					dispatch(CLOSE_MODAL);
 				},
 				onCancel: () => dispatch(CLOSE_MODAL),
@@ -73,9 +72,8 @@ const GroupsEditContainer = ({ className }) => {
 			openModal({
 				text: 'Добавить новую группу в базу данных?',
 				onConfirm: () => {
-					request(`/groups`, "POST", {name: saveGroupData.name}).then(() => {
-						setShouldUpdateGroupList(!shouldUpdateGroupList);
-					});
+					dispatch(addGroupAsync(saveGroupData));
+
 					handleCloseModal();
 					dispatch(CLOSE_MODAL);
 				},
@@ -89,40 +87,46 @@ const GroupsEditContainer = ({ className }) => {
 			<div className={className}>
 				<ContentContainer>
 					<H2>Редактирование групп</H2>
-					<div className="products-inner">
-						<>
-							<Button
-								maxWidth="200px"
-								className="new-product"
-								onClick={handleOpenModal}
-							>
-								Добавить группу
-							</Button>
-							{isModalOpen && (
-								<CreateGroup
-									createHandleSubmit={createHandleSubmit}
-									handleCloseModal={() => handleCloseModal()}
-								/>
-							)}
-						</>
+					{isLoading ? (
+						<Loader />
+					) : (
+						<div className="products-inner">
+							<>
+								<Button
+									maxWidth="200px"
+									className="new-product"
+									onClick={handleOpenModal}
+								>
+									Добавить группу
+								</Button>
+								{isModalOpen && (
+									<CreateGroup
+										createHandleSubmit={createHandleSubmit}
+										handleCloseModal={() => handleCloseModal()}
+									/>
+								)}
+							</>
 
-						<TableRow>
-							<TextBlock className="products-row-item">Id</TextBlock>
-							<TextBlock className="products-row-item">
-								Наименование
-							</TextBlock>
-							<TextBlock className="products-row-item">Действия</TextBlock>
-						</TableRow>
-						{groups.map(({ id, name }) => (
-							<GroupRow
-								id={id}
-								key={id}
-								name={name}
-								onGroupRemove={() => onGroupRemove(id)}
-								editGroupOnSave={editGroupOnSave}
-							/>
-						))}
-					</div>
+							<TableRow>
+								<TextBlock className="products-row-item">Id</TextBlock>
+								<TextBlock className="products-row-item">
+									Наименование
+								</TextBlock>
+								<TextBlock className="products-row-item">
+									Действия
+								</TextBlock>
+							</TableRow>
+							{groups.map(({ id, name }) => (
+								<GroupRow
+									id={id}
+									key={id}
+									name={name}
+									onGroupRemove={() => onGroupRemove(id)}
+									editGroupOnSave={editGroupOnSave}
+								/>
+							))}
+						</div>
+					)}
 				</ContentContainer>
 			</div>
 		</PrivateContent>

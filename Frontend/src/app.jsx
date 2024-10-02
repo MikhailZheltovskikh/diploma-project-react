@@ -3,8 +3,11 @@ import { Header, Modal } from './components';
 import { Authorization, Registration, Main, User, Product, ProductsEdit, Catalog, Cart, GroupsEdit } from './pages';
 import { useLayoutEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setUser } from './action';
+
 import styled from 'styled-components';
+import { setUser } from './redux/action';
+
+
 
 const Wrapper = styled.div`
 	min-height: 100%;

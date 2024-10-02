@@ -10,49 +10,66 @@ import {
 } from '../../components';
 import { ProductRow, TableRow } from './ui';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectUserRole } from '../../selectors';
-import { PAGINATION_LIMIT, ROLE } from '../../constans';
-import { CLOSE_MODAL, openModal } from '../../action';
+import { ROLE } from '../../constans';
+
 import styled from 'styled-components';
 import { CreateProduct } from './ui/create-product/create-product';
 import { debonce, request } from '../../utils';
+import { selectGroups, selectProducts, selectUserRole } from '../../redux/selectors';
+import {
+	CLOSE_MODAL,
+	openModal,
+	removeProduct,
+	getProductsAndGroups,
+} from '../../redux/action';
 
 const ProductsEditContainer = ({ className }) => {
 	const dispatch = useDispatch();
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
-	const [products, setProducts] = useState([]);
-	const [groups, setGroups] = useState([]);
+	// const [products, setProducts] = useState([]);
+	// const [groups, setGroups] = useState([]);
 
 	const [shouldUpdateProductList, setShouldUpdateProductList] = useState(false);
 	const userRole = useSelector(selectUserRole);
 
 	const [page, setPage] = useState(1);
-	const [lastPage, setLastPage] = useState(1);
+	// const [lastPage, setLastPage] = useState(1);
 
 	const [searchPhrase, setSearchPhrase] = useState('');
 	const [shouldSearch, setShouldSearch] = useState(false);
 
+	// const products = useSelector((state) => state.products);
+	// const lastPage = useSelector((state) => state.lastPage);
+
+	const { products, lastPage, isLoading } = useSelector(selectProducts);
+
+	const { groups } = useSelector(selectGroups);
+
 	useEffect(() => {
-		Promise.all([
-			request(
-				`/products?search=${searchPhrase}&page=${page}&limit=${PAGINATION_LIMIT}`,
-			),
-			request('/groups'),
-		]).then(
-			([
-				{
-					data: { products, lastPage },
-				},
-				{ data: dataGroups },
-			]) => {
-				setProducts(products);
-				setLastPage(lastPage);
-				setGroups(dataGroups);
-			},
-		);
-	}, [userRole, shouldUpdateProductList, page, shouldSearch]);
+		dispatch(getProductsAndGroups(searchPhrase, page));
+		// dispatch(getProducts(searchPhrase, page));
+		// dispatch(getGroups());
+		// Promise.all([
+		// 	request(
+		// 		`/products?search=${searchPhrase}&page=${page}&limit=${PAGINATION_LIMIT}`,
+		// 	),
+		// 	request('/groups'),
+		// ]).then(
+		// 	([
+		// 		{
+		// 			data: { products, lastPage },
+		// 		},
+		// 		{ data: dataGroups },
+		// 	]) => {
+		// 		setProducts(products);
+		// 		setLastPage(lastPage);
+		// 		setGroups(dataGroups);
+		// 		dispatch(setProductsData(products));
+		// 	},
+		// );
+	}, [dispatch, userRole, shouldUpdateProductList, page, shouldSearch]);
 
 	const handleOpenModal = () => {
 		setIsModalOpen(true);
@@ -63,14 +80,13 @@ const ProductsEditContainer = ({ className }) => {
 	};
 
 	const onProductsRemove = (productsId) => {
-
-
 		dispatch(
 			openModal({
 				text: 'Удалить товар?',
 				onConfirm: () => {
 					request(`/products/${productsId}`, 'DELETE').then(() => {
-						setShouldUpdateProductList(!shouldUpdateProductList);
+						dispatch(removeProduct(productsId));
+						// setShouldUpdateProductList(!shouldUpdateProductList);
 					});
 
 					dispatch(CLOSE_MODAL);
@@ -137,65 +153,91 @@ const ProductsEditContainer = ({ className }) => {
 		<PrivateContent access={[ROLE.ADMIN]}>
 			<div className={className}>
 				<ContentContainer>
-					<Search searchPhrase={searchPhrase} onChange={onSearch} />
-					<H2>Редактирование товаров</H2>
-					<div className="products-inner">
+					{isLoading ? (
+						<div>Загрузка...</div>
+					) : (
 						<>
-							<Button
-								maxWidth="180px"
-								className="new-product"
-								onClick={handleOpenModal}
-							>
-								Новый товар
-							</Button>
-							{isModalOpen && (
-								<CreateProduct
-									createHandleSubmit={createHandleSubmit}
-									handleCloseModal={() => handleCloseModal()}
+							<Search searchPhrase={searchPhrase} onChange={onSearch} />
+							<H2>Редактирование товаров</H2>
+
+							<div className="products-inner">
+								<>
+									<Button
+										maxWidth="180px"
+										className="new-product"
+										onClick={handleOpenModal}
+									>
+										Новый товар
+									</Button>
+									{isModalOpen && (
+										<CreateProduct
+											createHandleSubmit={createHandleSubmit}
+											handleCloseModal={() => handleCloseModal()}
+										/>
+									)}
+								</>
+
+								<TableRow>
+									<TextBlock className="products-row-item">
+										Id
+									</TextBlock>
+									<TextBlock className="products-row-item">
+										Наименование
+									</TextBlock>
+									<TextBlock className="products-row-item">
+										Категория
+									</TextBlock>
+									<TextBlock className="products-row-item">
+										Описание
+									</TextBlock>
+									<TextBlock className="products-row-item">
+										Стоимость
+									</TextBlock>
+									<TextBlock className="products-row-item">
+										Фото
+									</TextBlock>
+									<TextBlock className="products-row-item">
+										Кол-во
+									</TextBlock>
+									<TextBlock className="products-row-item">
+										Действия
+									</TextBlock>
+								</TableRow>
+
+								{products.map(
+									({
+										id,
+										title,
+										group,
+										image_url,
+										description,
+										price,
+										amount,
+									}) => (
+										<ProductRow
+											id={id}
+											key={id}
+											title={title}
+											groups={groups}
+											group={group}
+											image_url={image_url}
+											description={description}
+											price={price}
+											amount={amount}
+											onProductsRemove={() => onProductsRemove(id)}
+											editProductOnSave={editProductOnSave}
+										/>
+									),
+								)}
+							</div>
+							{lastPage > 1 && (
+								<Pagination
+									page={page}
+									lastPage={lastPage}
+									setPage={setPage}
 								/>
 							)}
 						</>
-
-						<TableRow>
-							<TextBlock className="products-row-item">Id</TextBlock>
-							<TextBlock className="products-row-item">
-								Наименование
-							</TextBlock>
-							<TextBlock className="products-row-item">Категория</TextBlock>
-							<TextBlock className="products-row-item">Описание</TextBlock>
-							<TextBlock className="products-row-item">Стоимость</TextBlock>
-							<TextBlock className="products-row-item">Фото</TextBlock>
-							<TextBlock className="products-row-item">Кол-во</TextBlock>
-							<TextBlock className="products-row-item">Действия</TextBlock>
-						</TableRow>
-						{products.map(
-							({
-								id,
-								title,
-								group,
-								image_url,
-								description,
-								price,
-								amount,
-							}) => (
-								<ProductRow
-									id={id}
-									key={id}
-									title={title}
-									groups={groups}
-									group={group}
-									image_url={image_url}
-									description={description}
-									price={price}
-									amount={amount}
-									onProductsRemove={() => onProductsRemove(id)}
-									editProductOnSave={editProductOnSave}
-								/>
-							),
-						)}
-					</div>
-					{lastPage > 1 && (
-						<Pagination page={page} lastPage={lastPage} setPage={setPage} />
 					)}
 				</ContentContainer>
 			</div>

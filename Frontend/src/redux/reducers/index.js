@@ -1,5 +1,6 @@
 export * from './product-reducer'
 export * from './products-reducer'
 export * from './group-reducer'
+export * from './groups-reducer'
 export * from './user-reducer'
 export * from './app-reducer'

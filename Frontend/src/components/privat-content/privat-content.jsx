@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { Error } from '../error/error';
-import { selectUserRole } from '../../selectors';
+import { selectUserRole } from '../../redux/selectors';
 import { ERROR } from '../../constans/error';
 import { checkAccess } from '../../utils/check-access';
 

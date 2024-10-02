@@ -4,6 +4,8 @@ import { GroupBlock, ProductsCard } from './ui';
 import { PAGINATION_LIMIT } from '../../constans';
 import { debonce, request } from '../../utils';
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectProducts } from '../../redux/selectors';
 
 const MainContainer = ({ className }) => {
 	const [products, setProducts] = useState([]);
@@ -14,7 +16,12 @@ const MainContainer = ({ className }) => {
 	const [searchPhrase, setSearchPhrase] = useState('');
 	const [shouldSearch, setShouldSearch] = useState(false);
 
+	const dispatch = useDispatch();
+
 	useEffect(() => {
+		// dispatch(getProduct({ searchPhrase, page }));
+
+
 		Promise.all([
 			request(
 				`/products?search=${searchPhrase}&page=${page}&limit=${PAGINATION_LIMIT}`,
@@ -32,7 +39,7 @@ const MainContainer = ({ className }) => {
 				setGroups(dataGroups);
 			},
 		);
-	}, [page, shouldSearch]);
+	}, [dispatch, page, shouldSearch]);
 
 	const startDelaySearch = useMemo(() => debonce(setShouldSearch, 2000), []);
 

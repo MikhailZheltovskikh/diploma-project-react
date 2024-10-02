@@ -7,15 +7,14 @@ import {
 	IconBasket,
 	IconExit,
 } from '..';
-import { ROLE } from '../../constans';
+
 import { useSelector, useDispatch } from 'react-redux';
-import {
-	selectUserRole,
-	selectUserLogin,
-	selectUserCart,
-} from '../../selectors';
-import { logout } from '../../action';
+
 import styled from 'styled-components';
+
+import { selectUserCart, selectUserLogin, selectUserRole } from '../../redux/selectors';
+import { logout } from '../../redux/action';
+import { ROLE } from '../../constans';
 
 const HeaderContainer = ({ className }) => {
 	const roleId = useSelector(selectUserRole);

@@ -14,3 +14,5 @@ export * from './privat-content/privat-content';
 export * from './modal/modal';
 export * from './pagination/pagination';
 export * from './search/search';
+export * from './loader/loader';
+

@@ -12,11 +12,6 @@ const initialProductState = {
 
 export const productReducer = (state = initialProductState, action) => {
 	switch (action.type) {
-		case ACTION__TYPE.REMOVE_PRODUCT:
-			return {
-				...state,
-				...state.products.filter((product) => product.id !== action.payload),
-			};
 		case ACTION__TYPE.SET_PRODUCT_DATA:
 			return {
 				...state,

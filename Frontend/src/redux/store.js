@@ -11,6 +11,7 @@ import {
 	productReducer,
 	productsReducer,
 	groupReducer,
+	groupsReducer
 } from './reducers';
 
 const reducer = combineReducers({
@@ -19,6 +20,7 @@ const reducer = combineReducers({
 	product: productReducer,
 	products: productsReducer,
 	group: groupReducer,
+	groups: groupsReducer,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

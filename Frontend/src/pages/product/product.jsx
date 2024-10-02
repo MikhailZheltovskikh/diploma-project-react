@@ -2,9 +2,10 @@ import { Button, ContentContainer, H2, H3, Image, TextBlock } from '../../compon
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { selectProduct } from '../../redux/selectors';
+import { loadProductAsync, addProductToCart } from '../../redux/action';
 import styled from 'styled-components';
-import { addProductToCart, loadProductAsync } from '../../action';
-import { selectProduct } from '../../selectors';
+
 
 const ProductContainer = ({ className }) => {
 	const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const ProductContainer = ({ className }) => {
 	}, [dispatch, params.id]);
 
 	const handleAddToCart = () => {
-		
+
 		dispatch(addProductToCart(product));
 	};
 

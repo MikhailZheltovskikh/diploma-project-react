@@ -4,8 +4,10 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ROLE } from '../../constans';
 import { useSelector } from 'react-redux';
-import { selectUserRole } from '../../selectors';
+
 import { request } from '../../utils';
+import { selectUserRole } from '../../redux/selectors';
+
 
 const UsersContainer = ({ className }) => {
 	const [users, setUsers] = useState([]);

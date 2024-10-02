@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { AsideBlock, Button, ContentContainer, H2, TextBlock } from '../../components';
 import { ProductCard } from './ui';
 import { useSelector } from 'react-redux';
-import { selectUserCart } from '../../selectors';
+import { selectUserCart } from '../../redux/selectors';
 
 const CartContainer = ({ className }) => {
 	const products = useSelector(selectUserCart);
