@@ -15,13 +15,15 @@ import { ROLE } from '../../constans';
 import styled from 'styled-components';
 import { CreateProduct } from './ui/create-product/create-product';
 import { debonce, request } from '../../utils';
-import { selectGroups, selectProducts, selectUserRole } from '../../redux/selectors';
+import { selectGroup, selectProduct, selectUserRole } from '../../redux/selectors';
 import {
 	CLOSE_MODAL,
 	openModal,
 	removeProduct,
 	getProductsAndGroups,
 } from '../../redux/action';
+
+// import { getProductsAndGroups } from '../../redux/action'
 
 const ProductsEditContainer = ({ className }) => {
 	const dispatch = useDispatch();
@@ -43,14 +45,14 @@ const ProductsEditContainer = ({ className }) => {
 	// const products = useSelector((state) => state.products);
 	// const lastPage = useSelector((state) => state.lastPage);
 
-	const { products, lastPage, isLoading } = useSelector(selectProducts);
+	const { products, lastPage, isLoading } = useSelector(selectProduct);
 
-	const { groups } = useSelector(selectGroups);
+	const { groups } = useSelector(selectGroup);
 
 	useEffect(() => {
 		dispatch(getProductsAndGroups(searchPhrase, page));
 		// dispatch(getProducts(searchPhrase, page));
-		// dispatch(getGroups());
+		// dispatch(getGroupsAsync());
 		// Promise.all([
 		// 	request(
 		// 		`/products?search=${searchPhrase}&page=${page}&limit=${PAGINATION_LIMIT}`,

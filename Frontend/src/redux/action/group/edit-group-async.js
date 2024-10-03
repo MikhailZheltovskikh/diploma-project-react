@@ -1,8 +1,5 @@
-
-import { request } from '../../utils';
-import { editGroup } from './edit-group';
-
-
+import { request } from "../../../utils";
+import { editGroup } from "./edit-group";
 
 export const editGroupAsync = (saveGroupData) => async (dispatch) => {
 	try {

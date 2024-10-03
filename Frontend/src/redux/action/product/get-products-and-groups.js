@@ -1,9 +1,9 @@
-import { PAGINATION_LIMIT } from "../../constans";
-import { request } from "../../utils";
-import { setGroupsData } from "./set-groups-data";
-import { setLoading } from "./set-loading";
-import { setProductsData } from "./set-products-data";
 
+import { PAGINATION_LIMIT } from '../../../constans';
+import { request } from '../../../utils';
+import { setGroupsData } from '../group/set-groups-data';
+import { setLoading } from '../set-loading';
+import { setProductsData } from './set-products-data';
 
 export const getProductsAndGroups = (searchPhrase, page) => async (dispatch) => {
 	dispatch(setLoading(true));

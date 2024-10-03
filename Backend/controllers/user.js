@@ -59,7 +59,7 @@ function deleteUser(id) {
 // edit(roles)
 
 function updateUser(id, userData) {
-    return User.findByIdAndUpdate(id, userData, { reternDocument: 'after' });
+    return User.findByIdAndUpdate(id, userData, { new: true });
 }
 
 module.exports = {

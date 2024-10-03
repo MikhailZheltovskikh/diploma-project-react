@@ -1,8 +1,7 @@
-import { request } from "../../utils";
-import { setGroupsData } from "./set-groups-data";
+import { request } from '../../../utils';
+import { setGroupsData } from './set-groups-data';
 
-
-export const getGroups = () => async (dispatch) => {
+export const getGroupsAsync = () => async (dispatch) => {
 	try {
 		const response = await request('/groups');
 		const { data } = response;

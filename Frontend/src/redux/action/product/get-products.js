@@ -1,7 +1,9 @@
-import { PAGINATION_LIMIT } from "../../constans";
-import { request } from "../../utils";
-import { setLoading } from "./set-loading";
+import { PAGINATION_LIMIT } from "../../../constans";
+import { request } from "../../../utils";
+import { setLoading } from "../set-loading";
 import { setProductsData } from "./set-products-data";
+
+
 
 
 export const getProducts = (searchPhrase, page) => async (dispatch) => {

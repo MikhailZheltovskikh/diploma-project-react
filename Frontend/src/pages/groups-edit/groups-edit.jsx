@@ -9,13 +9,13 @@ import {
 } from '../../components';
 import { GroupRow, TableRow } from './ui';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectGroups } from '../../redux/selectors';
+import { selectGroup } from '../../redux/selectors';
 import { ROLE } from '../../constans';
 import {
 	addGroupAsync,
 	CLOSE_MODAL,
 	editGroupAsync,
-	getGroups,
+	getGroupsAsync,
 	openModal,
 	removeGroupAsync,
 } from '../../redux/action';
@@ -27,10 +27,10 @@ const GroupsEditContainer = ({ className }) => {
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
-	const { groups, isLoading } = useSelector(selectGroups);
+	const { groups, isLoading } = useSelector(selectGroup);
 
 	useEffect(() => {
-		dispatch(getGroups());
+		dispatch(getGroupsAsync());
 	}, [dispatch]);
 
 	const handleOpenModal = () => {

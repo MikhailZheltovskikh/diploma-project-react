@@ -7,7 +7,7 @@ async function addGroup(group) {
 
 // edit
 async function editGroup(id, group) {
-    const newGroup = await Group.findByIdAndUpdate(id, group, { reternDocument: 'after' });
+    const newGroup = await Group.findByIdAndUpdate(id, group, { new: true });
 
     return newGroup;
 }

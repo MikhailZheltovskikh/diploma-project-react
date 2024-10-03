@@ -1,68 +1,88 @@
-import { Content, ContentContainer, H2, H3, PrivateContent } from '../../components';
+import {
+	Content,
+	ContentContainer,
+	H2,
+	H3,
+	Loader,
+	PrivateContent,
+} from '../../components';
 import { TabelRow, UserRole } from './ui';
-import { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import { useEffect } from 'react';
 import { ROLE } from '../../constans';
-import { useSelector } from 'react-redux';
-
-import { request } from '../../utils';
-import { selectUserRole } from '../../redux/selectors';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { selectUsers } from '../../redux/selectors';
+import { editUserAsync, getUsersAsync, removeUserAsync } from '../../redux/action';
+import styled from 'styled-components';
+import { CLOSE_MODAL, openModal } from '../../redux/action';
 
 const UsersContainer = ({ className }) => {
-	const [users, setUsers] = useState([]);
-	const [roles, setRoles] = useState([]);
-	const [errorMessage, setErrorMessage] = useState(null);
-	const [shouldUpdateUserList, setShouldUpdateUserList] = useState(false);
-	const userRole = useSelector(selectUserRole);
+	const dispatch = useDispatch();
+
+	const { users, roles, isLoading, error } = useSelector(selectUsers);
 
 	useEffect(() => {
-		Promise.all([request('/users'), request('/users/roles')]).then(
-			([usersRes, rolesRes]) => {
-				if (usersRes.error || rolesRes.error) {
-					setErrorMessage(usersRes.error || rolesRes.error);
-					return;
-				}
-
-				setUsers(usersRes.data);
-				setRoles(rolesRes.data);
-			},
-		);
-	}, [shouldUpdateUserList, userRole]);
+		dispatch(getUsersAsync());
+	}, [dispatch]);
 
 	const onUserRemove = (userId) => {
-		request(`/users/${userId}`, 'DELETE').then(() => {
-			setShouldUpdateUserList(!shouldUpdateUserList);
-		});
+		dispatch(
+			openModal({
+				text: 'Удалить пользователя?',
+				onConfirm: () => {
+					dispatch(removeUserAsync(userId));
+					dispatch(CLOSE_MODAL);
+				},
+				onCancel: () => dispatch(CLOSE_MODAL),
+			}),
+		);
+	};
+
+	const onRoleSave = (saveUserData) => {
+		dispatch(
+			openModal({
+				text: 'Сохранить изменения?',
+				onConfirm: () => {
+					dispatch(editUserAsync(saveUserData));
+					dispatch(CLOSE_MODAL);
+				},
+				onCancel: () => dispatch(CLOSE_MODAL),
+			}),
+		);
 	};
 
 	return (
-		<PrivateContent access={[ROLE.ADMIN]} serverError={errorMessage}>
+		<PrivateContent access={[ROLE.ADMIN]} serverError={error}>
 			<div className={className}>
-				<Content error={errorMessage}>
+				<Content error={error}>
 					<ContentContainer>
 						<H2>Пользователи</H2>
-						<div className="tabel">
-							<TabelRow>
-								<H3 className="login-column">Логин</H3>
-								<H3 className="registed-at-column">Дата регистрации</H3>
-								<H3 className="role-column ">Роль</H3>
-							</TabelRow>
+						{isLoading ? (
+							<Loader />
+						) : (
+							<div className="tabel">
+								<TabelRow>
+									<H3 className="login-column">Логин</H3>
+									<H3 className="registed-at-column">
+										Дата регистрации
+									</H3>
+									<H3 className="role-column ">Роль</H3>
+								</TabelRow>
 
-							{users.map(({ id, login, registeredAt, roleId }) => (
-								<UserRole
-									key={id}
-									id={id}
-									login={login}
-									registeredAt={registeredAt}
-									roleId={roleId}
-									roles={roles.filter(
-										({ id: roleId }) => roleId !== ROLE.GUEST,
-									)}
-									onUserRemove={() => onUserRemove(id)}
-								/>
-							))}
-						</div>
+								{users.map(({ id, login, registeredAt, roleId }) => (
+									<UserRole
+										key={id}
+										id={id}
+										login={login}
+										registeredAt={registeredAt}
+										roleId={roleId}
+										roles={roles}
+										initialRoleId={roleId}
+										onRoleSave={onRoleSave}
+										onUserRemove={() => onUserRemove(id)}
+									/>
+								))}
+							</div>
+						)}
 					</ContentContainer>
 				</Content>
 			</div>

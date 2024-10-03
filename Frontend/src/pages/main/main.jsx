@@ -5,7 +5,6 @@ import { PAGINATION_LIMIT } from '../../constans';
 import { debonce, request } from '../../utils';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectProducts } from '../../redux/selectors';
 
 const MainContainer = ({ className }) => {
 	const [products, setProducts] = useState([]);

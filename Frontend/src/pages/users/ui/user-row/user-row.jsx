@@ -2,7 +2,6 @@ import { IconDelete, IconSave, ButtonIcon } from '../../../../components';
 import styled from 'styled-components';
 import { TabelRow } from '../table-row/table-row';
 import { useState } from 'react';
-import { request } from '../../../../utils';
 
 const UserRoleContainer = ({
 	className,
@@ -12,21 +11,22 @@ const UserRoleContainer = ({
 	roleId: userRoleId,
 	roles,
 	onUserRemove,
+	onRoleSave,
+	initialRoleId,
 }) => {
-	const [initialRoleId, setInitialRoleId] = useState(userRoleId);
 	const [selectedRoleId, setSelectedRoleId] = useState(userRoleId);
 
 	const onRoleChange = ({ target }) => {
 		setSelectedRoleId(Number(target.value));
 	};
 
-	const onRoleSave = (userId, newUserRoleId) => {
-		request(`/users/${userId}`, 'PATCH', { roleId: newUserRoleId }).then(() => {
-			setInitialRoleId(newUserRoleId);
-		});
-	};
-
 	const isSaveBtnDisabled = selectedRoleId === initialRoleId;
+	// !!!!баг то ли состояние не обновляется то ли че, кнопка не переходит в дизейблед при диспатче на сервер
+
+	const saveUserData = {
+		id,
+		newRole: selectedRoleId,
+	};
 
 	return (
 		<div className={className}>
@@ -43,7 +43,7 @@ const UserRoleContainer = ({
 					</select>
 					<ButtonIcon
 						disabled={isSaveBtnDisabled}
-						onClick={() => onRoleSave(id, selectedRoleId)}
+						onClick={() => onRoleSave(saveUserData)}
 					>
 						<IconSave />
 					</ButtonIcon>

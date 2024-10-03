@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectProduct } from '../../redux/selectors';
+// import { loadProductAsync, addProductToCart } from '../../redux/action';
 import { loadProductAsync, addProductToCart } from '../../redux/action';
 import styled from 'styled-components';
 

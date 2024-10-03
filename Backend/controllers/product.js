@@ -14,7 +14,7 @@ async function addProduct(productData) {
 
 // edit
 async function editProduct(id, product) {
-    const newProduct = await Product.findByIdAndUpdate(id, product, { reternDocument: 'after' });
+    const newProduct = await Product.findByIdAndUpdate(id, product, { new: true });
     return newProduct;
 }
 

@@ -1,4 +1,4 @@
-import { request } from '../../utils';
+import { request } from '../../../utils';
 import { removeGroup } from './remove-group';
 
 export const removeGroupAsync = (groupId) => async (dispatch) => {
