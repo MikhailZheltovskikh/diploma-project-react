@@ -73,7 +73,6 @@ const GroupsEditContainer = ({ className }) => {
 				text: 'Добавить новую группу в базу данных?',
 				onConfirm: () => {
 					dispatch(addGroupAsync(saveGroupData));
-
 					handleCloseModal();
 					dispatch(CLOSE_MODAL);
 				},

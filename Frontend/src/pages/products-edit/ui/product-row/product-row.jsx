@@ -38,6 +38,9 @@ const ProductRowContainer = ({
 		imageUrlValue === image_url &&
 		amountValue === amount;
 
+	// почему то не обновляется состояние кнопки дисейблед после отправки на сервер
+	// не работает именно при изменении priceValue imageUrlValue amountValue
+
 	const saveProductData = {
 		id,
 		title: titleValue,

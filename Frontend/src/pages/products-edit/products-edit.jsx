@@ -3,6 +3,7 @@ import {
 	Button,
 	ContentContainer,
 	H2,
+	Loader,
 	Pagination,
 	PrivateContent,
 	Search,
@@ -14,64 +15,32 @@ import { ROLE } from '../../constans';
 
 import styled from 'styled-components';
 import { CreateProduct } from './ui/create-product/create-product';
-import { debonce, request } from '../../utils';
-import { selectGroup, selectProduct, selectUserRole } from '../../redux/selectors';
+import { debonce } from '../../utils';
+import { selectGroup, selectProducts } from '../../redux/selectors';
+import { CLOSE_MODAL, openModal, getGroupsAsync } from '../../redux/action';
+import { getProductsAsync } from '../../redux/action/product/get-products-acync';
 import {
-	CLOSE_MODAL,
-	openModal,
-	removeProduct,
-	getProductsAndGroups,
-} from '../../redux/action';
-
-// import { getProductsAndGroups } from '../../redux/action'
+	addProductAsync,
+	editProductAsync,
+	removeProductAsync,
+} from '../../redux/action/product';
 
 const ProductsEditContainer = ({ className }) => {
 	const dispatch = useDispatch();
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
-
-	// const [products, setProducts] = useState([]);
-	// const [groups, setGroups] = useState([]);
-
-	const [shouldUpdateProductList, setShouldUpdateProductList] = useState(false);
-	const userRole = useSelector(selectUserRole);
-
 	const [page, setPage] = useState(1);
-	// const [lastPage, setLastPage] = useState(1);
 
 	const [searchPhrase, setSearchPhrase] = useState('');
 	const [shouldSearch, setShouldSearch] = useState(false);
 
-	// const products = useSelector((state) => state.products);
-	// const lastPage = useSelector((state) => state.lastPage);
-
-	const { products, lastPage, isLoading } = useSelector(selectProduct);
-
 	const { groups } = useSelector(selectGroup);
+	const { products, lastPage, isLoading } = useSelector(selectProducts);
 
 	useEffect(() => {
-		dispatch(getProductsAndGroups(searchPhrase, page));
-		// dispatch(getProducts(searchPhrase, page));
-		// dispatch(getGroupsAsync());
-		// Promise.all([
-		// 	request(
-		// 		`/products?search=${searchPhrase}&page=${page}&limit=${PAGINATION_LIMIT}`,
-		// 	),
-		// 	request('/groups'),
-		// ]).then(
-		// 	([
-		// 		{
-		// 			data: { products, lastPage },
-		// 		},
-		// 		{ data: dataGroups },
-		// 	]) => {
-		// 		setProducts(products);
-		// 		setLastPage(lastPage);
-		// 		setGroups(dataGroups);
-		// 		dispatch(setProductsData(products));
-		// 	},
-		// );
-	}, [dispatch, userRole, shouldUpdateProductList, page, shouldSearch]);
+		dispatch(getProductsAsync(searchPhrase, page));
+		dispatch(getGroupsAsync());
+	}, [dispatch, page, searchPhrase]);
 
 	const handleOpenModal = () => {
 		setIsModalOpen(true);
@@ -81,15 +50,12 @@ const ProductsEditContainer = ({ className }) => {
 		setIsModalOpen(false);
 	};
 
-	const onProductsRemove = (productsId) => {
+	const onProductsRemove = (productId) => {
 		dispatch(
 			openModal({
 				text: 'Удалить товар?',
 				onConfirm: () => {
-					request(`/products/${productsId}`, 'DELETE').then(() => {
-						dispatch(removeProduct(productsId));
-						// setShouldUpdateProductList(!shouldUpdateProductList);
-					});
+					dispatch(removeProductAsync(productId));
 
 					dispatch(CLOSE_MODAL);
 				},
@@ -103,17 +69,7 @@ const ProductsEditContainer = ({ className }) => {
 			openModal({
 				text: 'Сохранить изменения?',
 				onConfirm: () => {
-					request(`/products/${saveProductData.id}`, 'PATCH', {
-						title: saveProductData.title,
-						image: saveProductData.image_url,
-						description: saveProductData.description,
-						price: saveProductData.price,
-						group: saveProductData.group,
-						amount: saveProductData.amount,
-					}).then(() => {
-						setShouldUpdateProductList(!shouldUpdateProductList);
-					});
-
+					dispatch(editProductAsync(saveProductData));
 					dispatch(CLOSE_MODAL);
 				},
 				onCancel: () => dispatch(CLOSE_MODAL),
@@ -126,16 +82,7 @@ const ProductsEditContainer = ({ className }) => {
 			openModal({
 				text: 'Добавить новый товар в базу данных?',
 				onConfirm: () => {
-					request(`/products`, 'POST', {
-						title: saveProductData.title,
-						image: saveProductData.image_url,
-						description: saveProductData.description,
-						price: saveProductData.price,
-						group: saveProductData.group,
-						amount: saveProductData.amount,
-					}).then(() => {
-						setShouldUpdateProductList(!shouldUpdateProductList);
-					});
+					dispatch(addProductAsync(saveProductData));
 					handleCloseModal();
 					dispatch(CLOSE_MODAL);
 				},
@@ -155,29 +102,26 @@ const ProductsEditContainer = ({ className }) => {
 		<PrivateContent access={[ROLE.ADMIN]}>
 			<div className={className}>
 				<ContentContainer>
+					<Search searchPhrase={searchPhrase} onChange={onSearch} />
+					<H2>Редактирование товаров</H2>
 					{isLoading ? (
-						<div>Загрузка...</div>
+						<Loader />
 					) : (
 						<>
-							<Search searchPhrase={searchPhrase} onChange={onSearch} />
-							<H2>Редактирование товаров</H2>
-
 							<div className="products-inner">
-								<>
-									<Button
-										maxWidth="180px"
-										className="new-product"
-										onClick={handleOpenModal}
-									>
-										Новый товар
-									</Button>
-									{isModalOpen && (
-										<CreateProduct
-											createHandleSubmit={createHandleSubmit}
-											handleCloseModal={() => handleCloseModal()}
-										/>
-									)}
-								</>
+								<Button
+									maxWidth="180px"
+									className="new-product"
+									onClick={handleOpenModal}
+								>
+									Новый товар
+								</Button>
+								{isModalOpen && (
+									<CreateProduct
+										createHandleSubmit={createHandleSubmit}
+										handleCloseModal={() => handleCloseModal()}
+									/>
+								)}
 
 								<TableRow>
 									<TextBlock className="products-row-item">

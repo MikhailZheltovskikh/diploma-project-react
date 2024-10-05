@@ -1,13 +1,9 @@
 import { PAGINATION_LIMIT } from "../../../constans";
 import { request } from "../../../utils";
-import { setLoading } from "../set-loading";
 import { setProductsData } from "./set-products-data";
 
 
-
-
-export const getProducts = (searchPhrase, page) => async (dispatch) => {
-	dispatch(setLoading(true));
+export const getProductsAsync = (searchPhrase, page) => async (dispatch) => {
 	try {
 		const response = await request(
 			`/products?search=${searchPhrase}&page=${page}&limit=${PAGINATION_LIMIT}`,
@@ -16,7 +12,5 @@ export const getProducts = (searchPhrase, page) => async (dispatch) => {
 		dispatch(setProductsData(products, lastPage));
 	} catch (error) {
 		// dispatch(setErrorMessage(error.message));
-	} finally {
-		dispatch(setLoading(false));
 	}
 };

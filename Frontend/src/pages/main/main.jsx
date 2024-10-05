@@ -1,44 +1,33 @@
 import { useEffect, useMemo, useState } from 'react';
-import { AsideBlock, ContentContainer, Pagination, Search } from '../../components';
+import {
+	AsideBlock,
+	ContentContainer,
+	Loader,
+	Pagination,
+	Search,
+} from '../../components';
 import { GroupBlock, ProductsCard } from './ui';
 import { PAGINATION_LIMIT } from '../../constans';
 import { debonce, request } from '../../utils';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
+import { getGroupsAsync, getProductsAsync } from '../../redux/action';
+import { selectGroup, selectProducts } from '../../redux/selectors';
 
 const MainContainer = ({ className }) => {
-	const [products, setProducts] = useState([]);
-	const [groups, setGroups] = useState([]);
-
 	const [page, setPage] = useState(1);
-	const [lastPage, setLastPage] = useState(1);
 	const [searchPhrase, setSearchPhrase] = useState('');
 	const [shouldSearch, setShouldSearch] = useState(false);
+
+	const { groups } = useSelector(selectGroup);
+	const { products, lastPage, isLoading } = useSelector(selectProducts);
 
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		// dispatch(getProduct({ searchPhrase, page }));
-
-
-		Promise.all([
-			request(
-				`/products?search=${searchPhrase}&page=${page}&limit=${PAGINATION_LIMIT}`,
-			),
-			request('/groups'),
-		]).then(
-			([
-				{
-					data: { products, lastPage },
-				},
-				{ data: dataGroups },
-			]) => {
-				setProducts(products);
-				setLastPage(lastPage);
-				setGroups(dataGroups);
-			},
-		);
-	}, [dispatch, page, shouldSearch]);
+		dispatch(getProductsAsync(searchPhrase, page));
+		dispatch(getGroupsAsync());
+	}, [dispatch, page, searchPhrase, shouldSearch]);
 
 	const startDelaySearch = useMemo(() => debonce(setShouldSearch, 2000), []);
 
@@ -52,36 +41,46 @@ const MainContainer = ({ className }) => {
 			<main className={className}>
 				<ContentContainer>
 					<Search searchPhrase={searchPhrase} onChange={onSearch} />
-					<div className="main__inner">
-						<AsideBlock title="Каталог">
-							<GroupBlock groups={groups} />
-						</AsideBlock>
-						<div className="content">
-							<div className="filter">Функции сортировки</div>
-							<div className="content__inner">
-								{products.map(
-									({ id, title, image_url, description, price }) => (
-										<ProductsCard
-											id={id}
-											key={id}
-											title={title}
-											image_url={image_url}
-											description={description}
-											price={price}
-										/>
-									),
+					{isLoading ? (
+						<Loader />
+					) : (
+						<div className="main__inner">
+							<AsideBlock title="Каталог">
+								<GroupBlock groups={groups} />
+							</AsideBlock>
+							<div className="content">
+								<div className="filter">Функции сортировки</div>
+								<div className="content__inner">
+									{products.map(
+										({
+											id,
+											title,
+											image_url,
+											description,
+											price,
+										}) => (
+											<ProductsCard
+												id={id}
+												key={id}
+												title={title}
+												image_url={image_url}
+												description={description}
+												price={price}
+											/>
+										),
+									)}
+								</div>
+
+								{lastPage > 1 && (
+									<Pagination
+										page={page}
+										lastPage={lastPage}
+										setPage={setPage}
+									/>
 								)}
 							</div>
-
-							{lastPage > 1 && (
-								<Pagination
-									page={page}
-									lastPage={lastPage}
-									setPage={setPage}
-								/>
-							)}
 						</div>
-					</div>
+					)}
 				</ContentContainer>
 			</main>
 		</>

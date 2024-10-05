@@ -4,8 +4,9 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectProduct } from '../../redux/selectors';
 // import { loadProductAsync, addProductToCart } from '../../redux/action';
-import { loadProductAsync, addProductToCart } from '../../redux/action';
+import { addProductToCart } from '../../redux/action';
 import styled from 'styled-components';
+import { getProductAsync } from '../../redux/action/product';
 
 
 const ProductContainer = ({ className }) => {
@@ -14,11 +15,10 @@ const ProductContainer = ({ className }) => {
 	const product = useSelector(selectProduct);
 
 	useEffect(() => {
-		dispatch(loadProductAsync(params.id));
+		dispatch(getProductAsync(params.id));
 	}, [dispatch, params.id]);
 
 	const handleAddToCart = () => {
-
 		dispatch(addProductToCart(product));
 	};
 

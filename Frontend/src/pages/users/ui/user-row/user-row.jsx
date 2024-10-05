@@ -21,7 +21,6 @@ const UserRoleContainer = ({
 	};
 
 	const isSaveBtnDisabled = selectedRoleId === initialRoleId;
-	// !!!!баг то ли состояние не обновляется то ли че, кнопка не переходит в дизейблед при диспатче на сервер
 
 	const saveUserData = {
 		id,

@@ -8,7 +8,7 @@ const hasRole = require('./middlewares/hasRole');
 const authenticated = require('./middlewares/authenticated');
 const ROLES = require('./constants/roles');
 const { register, login, getUsers, getRoles, updateUser, deleteUser } = require('./controllers/user');
-const { getProduct, getProducts, addProduct, deleteProduct, editProduct } = require('./controllers/product');
+const { getProduct, getProducts, addProduct, deleteProduct, editProduct, getProductsFilterGroup } = require('./controllers/product');
 const { getGroup, getGroups, editGroup, deleteGroup, addGroup } = require('./controllers/group');
 
 const port = 3001;
@@ -52,6 +52,13 @@ app.get('/products/:id', async (req, res) => {
     const product = await getProduct(req.params.id);
 
     res.send({ data: mapProduct(product) });
+});
+
+app.get('/catalog', async (req, res) => {
+    const { search, limit, page, group } = req.query;
+    const { products, lastPage } = await getProductsFilterGroup(search, limit, page, group);
+
+    res.send({ data: { lastPage, products: products.map(mapProduct) } });
 });
 
 app.get('/groups', async (req, res) => {
