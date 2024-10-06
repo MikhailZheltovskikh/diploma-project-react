@@ -8,11 +8,18 @@ const hasRole = require('./middlewares/hasRole');
 const authenticated = require('./middlewares/authenticated');
 const ROLES = require('./constants/roles');
 const { register, login, getUsers, getRoles, updateUser, deleteUser } = require('./controllers/user');
-const { getProduct, getProducts, addProduct, deleteProduct, editProduct, getProductsFilterGroup } = require('./controllers/product');
+const {
+    getProduct,
+    getProducts,
+    addProduct,
+    deleteProduct,
+    editProduct,
+    getProductsFilterGroup,
+} = require('./controllers/product');
 const { getGroup, getGroups, editGroup, deleteGroup, addGroup } = require('./controllers/group');
 
 const port = 3001;
- 
+
 const app = express();
 
 app.use(cookieParser());
@@ -43,9 +50,15 @@ app.post('/logout', (req, res) => {
 });
 
 app.get('/products', async (req, res) => {
-    const { products, lastPage } = await getProducts(req.query.search, req.query.limit, req.query.page);
-
-    res.send({ data: { lastPage, products: products.map(mapProduct) } });
+    const sort = req.query.sort;
+    const hasSort = 'sort' in req.query;
+    if (hasSort) {
+        const { products, lastPage } = await getProducts(req.query.search, req.query.limit, req.query.page, sort);
+        res.send({ data: { lastPage, products: products.map(mapProduct) } });
+    } else if (!hasSort) {
+        const { products, lastPage } = await getProducts(req.query.search, req.query.limit, req.query.page);
+        res.send({ data: { lastPage, products: products.map(mapProduct) } });
+    }
 });
 
 app.get('/products/:id', async (req, res) => {
@@ -55,10 +68,31 @@ app.get('/products/:id', async (req, res) => {
 });
 
 app.get('/catalog', async (req, res) => {
-    const { search, limit, page, group } = req.query;
-    const { products, lastPage } = await getProductsFilterGroup(search, limit, page, group);
+    // const { search, limit, page, group } = req.query;
+    // const { products, lastPage } = await getProductsFilterGroup(search, limit, page, group);
 
-    res.send({ data: { lastPage, products: products.map(mapProduct) } });
+    // res.send({ data: { lastPage, products: products.map(mapProduct) } });
+
+    const sort = req.query.sort;
+    const hasSort = 'sort' in req.query;
+    if (hasSort) {
+        const { products, lastPage } = await getProductsFilterGroup(
+            req.query.search,
+            req.query.limit,
+            req.query.page,
+            req.query.group,
+            sort
+        );
+        res.send({ data: { lastPage, products: products.map(mapProduct) } });
+    } else if (!hasSort) {
+        const { products, lastPage } = await getProductsFilterGroup(
+            req.query.search,
+            req.query.limit,
+            req.query.page,
+            req.query.group
+        );
+        res.send({ data: { lastPage, products: products.map(mapProduct) } });
+    }
 });
 
 app.get('/groups', async (req, res) => {

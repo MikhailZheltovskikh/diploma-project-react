@@ -2,13 +2,13 @@ import { useEffect, useMemo, useState } from 'react';
 import {
 	AsideBlock,
 	ContentContainer,
+	Filter,
 	Loader,
 	Pagination,
 	Search,
 } from '../../components';
 import { GroupBlock, ProductsCard } from './ui';
-import { PAGINATION_LIMIT } from '../../constans';
-import { debonce, request } from '../../utils';
+import { debonce } from '../../utils';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { getGroupsAsync, getProductsAsync } from '../../redux/action';
@@ -24,10 +24,12 @@ const MainContainer = ({ className }) => {
 
 	const dispatch = useDispatch();
 
+	const [priceSort, setPriceSort] = useState('');
+
 	useEffect(() => {
-		dispatch(getProductsAsync(searchPhrase, page));
+		dispatch(getProductsAsync(searchPhrase, page, priceSort));
 		dispatch(getGroupsAsync());
-	}, [dispatch, page, searchPhrase, shouldSearch]);
+	}, [dispatch, page, searchPhrase, shouldSearch, priceSort]);
 
 	const startDelaySearch = useMemo(() => debonce(setShouldSearch, 2000), []);
 
@@ -49,7 +51,7 @@ const MainContainer = ({ className }) => {
 								<GroupBlock groups={groups} />
 							</AsideBlock>
 							<div className="content">
-								<div className="filter">Функции сортировки</div>
+								<Filter setPriceSort={setPriceSort} />
 								<div className="content__inner">
 									{products.map(
 										({

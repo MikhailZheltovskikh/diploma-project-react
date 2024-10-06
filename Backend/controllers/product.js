@@ -24,13 +24,23 @@ function deleteProduct(id) {
 }
 
 // get list with search anp pagination
-async function getProducts(search = '', limit = 10, page = 1) {
+async function getProducts(search = '', limit = 10, page = 1, sort = '') {
+    const query = {
+        title: { $regex: search, $options: 'i' },
+    };
+
+    const sortOptions = {
+        asc: { price: 1 },
+        desc: { price: -1 },
+        '': { createdAt: -1 },
+    };
+
     const [products, count] = await Promise.all([
-        Product.find({ title: { $regex: search, $options: 'i' } })
+        Product.find(query)
             .limit(limit)
             .skip((page - 1) * limit)
-            .sort({ createdAt: -1 }),
-        Product.countDocuments({ title: { $regex: search, $options: 'i' } }),
+            .sort(sortOptions[sort]),
+        Product.countDocuments(query),
     ]);
 
     return {
@@ -40,7 +50,7 @@ async function getProducts(search = '', limit = 10, page = 1) {
 }
 
 // get list with search and pagination and filterGroup
-async function getProductsFilterGroup(search = '', limit = 10, page = 1, group) {
+async function getProductsFilterGroup(search = '', limit = 10, page = 1, group, sort = '') {
     const query = {
         title: { $regex: search, $options: 'i' },
     };
@@ -49,11 +59,17 @@ async function getProductsFilterGroup(search = '', limit = 10, page = 1, group) 
         query.group = group;
     }
 
+    const sortOptions = {
+        asc: { price: 1 },
+        desc: { price: -1 },
+        '': { createdAt: -1 },
+    };
+
     const [products, count] = await Promise.all([
         Product.find(query)
             .limit(limit)
             .skip((page - 1) * limit)
-            .sort({ createdAt: -1 }),
+            .sort(sortOptions[sort]),
         Product.countDocuments(query),
     ]);
 

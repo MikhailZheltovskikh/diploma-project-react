@@ -15,4 +15,5 @@ export * from './modal/modal';
 export * from './pagination/pagination';
 export * from './search/search';
 export * from './loader/loader';
+export * from './filter/filter';
 

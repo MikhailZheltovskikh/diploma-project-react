@@ -1,4 +1,11 @@
-import { ContentContainer, H2, Loader, Pagination, Search } from '../../components';
+import {
+	ContentContainer,
+	Filter,
+	H2,
+	Loader,
+	Pagination,
+	Search,
+} from '../../components';
 import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { debonce } from '../../utils';
@@ -23,9 +30,13 @@ const CatalogContainer = ({ className }) => {
 
 	const dispatch = useDispatch();
 
+	const [priceSort, setPriceSort] = useState('');
+
 	useEffect(() => {
-		dispatch(getProductsFilterGroupAsync(searchPhrase, page, selectedGroupId));
-	}, [dispatch, page, searchPhrase, shouldSearch, selectedGroupId]);
+		dispatch(
+			getProductsFilterGroupAsync(searchPhrase, page, selectedGroupId, priceSort),
+		);
+	}, [dispatch, page, searchPhrase, shouldSearch, selectedGroupId, priceSort]);
 
 	const startDelaySearch = useMemo(() => debonce(setShouldSearch, 2000), []);
 
@@ -49,6 +60,7 @@ const CatalogContainer = ({ className }) => {
 									? groups.find((group) => group.id === params.id)?.name
 									: 'Каталог'}
 							</H2>
+							<Filter setPriceSort={setPriceSort} />
 							{products.map(
 								({ id, title, image_url, description, price }) => (
 									<ProductsCard
