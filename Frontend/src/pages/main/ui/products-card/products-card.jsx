@@ -1,3 +1,4 @@
+import PropType from 'prop-types';
 import { ButtonLink, H2, H3, Image, TextBlock } from '../../../../components';
 import styled from 'styled-components';
 
@@ -63,3 +64,11 @@ export const ProductsCard = styled(ProductsCardContainer)`
 		column-gap: 30px;
 	}
 `;
+
+ProductsCard.propTypes = {
+	id: PropType.string.isRequired,
+	title: PropType.string.isRequired,
+	image_url: PropType.string.isRequired,
+	description: PropType.string.isRequired,
+	price: PropType.number.isRequired,
+};

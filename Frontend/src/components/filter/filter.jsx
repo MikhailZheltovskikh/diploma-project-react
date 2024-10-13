@@ -1,3 +1,4 @@
+import PropType from 'prop-types'
 import styled from 'styled-components';
 import { H3 } from '../H3/H3';
 import { Button } from '../buttons';
@@ -109,3 +110,7 @@ export const Filter = styled(FilterContainer)`
 		z-index: 2;
 	}
 `;
+
+Filter.propTypes = {
+	setPriceSort: PropType.func.isRequired,
+};

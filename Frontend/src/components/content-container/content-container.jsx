@@ -1,3 +1,4 @@
+import PropType from 'prop-types'
 import styled from 'styled-components';
 
 const ContentContainerContainer = ({ children, className }) => (
@@ -10,3 +11,7 @@ export const ContentContainer = styled(ContentContainerContainer)`
 	padding: 0 10px;
 	margin: 0 auto;
 `;
+
+ContentContainer.propTypes = {
+	children: PropType.node.isRequired,
+};

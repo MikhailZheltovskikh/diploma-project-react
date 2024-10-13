@@ -9,7 +9,7 @@ const app = express();
 app.use(cookieParser());
 app.use(express.json());
 
-app.use('/', routes);
+app.use('/api', routes);
 
 mongoose
     .connect('mongodb+srv://admin:Misha123456@cluster0.ibkqh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')

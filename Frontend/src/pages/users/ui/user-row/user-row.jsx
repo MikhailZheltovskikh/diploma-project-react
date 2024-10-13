@@ -1,3 +1,4 @@
+import PropType from 'prop-types';
 import { IconDelete, IconSave, ButtonIcon } from '../../../../components';
 import styled from 'styled-components';
 import { TabelRow } from '../table-row/table-row';
@@ -74,3 +75,14 @@ export const UserRole = styled(UserRoleContainer)`
 		border-radius: 0;
 	}
 `;
+
+UserRole.propTypes = {
+	id: PropType.string.isRequired,
+	login: PropType.string.isRequired,
+	registeredAt: PropType.string.isRequired,
+	roleId: PropType.number.isRequired,
+	roles: PropType.array.isRequired,
+	onUserRemove: PropType.func.isRequired,
+	onRoleSave: PropType.func.isRequired,
+	initialRoleId: PropType.number.isRequired,
+};

@@ -1,3 +1,4 @@
+import PropType from 'prop-types';
 import { Button, TextBlock } from '..';
 import styled from 'styled-components';
 
@@ -42,3 +43,9 @@ export const Pagination = styled(PaginationContainer)`
 		font-weight: 500;
 	}
 `;
+
+Pagination.propTypes = {
+	page: PropType.number,
+	setPage: PropType.func,
+	lastPage: PropType.number,
+};

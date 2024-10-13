@@ -1,3 +1,4 @@
+import PropType from 'prop-types';
 import { useState } from 'react';
 import {
 	Button,
@@ -128,3 +129,8 @@ export const CreateGroup = styled(CreateGroupContainer)`
 		right: 20px;
 	}
 `;
+
+CreateGroup.propTypes = {
+	handleCloseModal: PropType.func.isRequired,
+	createHandleSubmit: PropType.func.isRequired,
+};

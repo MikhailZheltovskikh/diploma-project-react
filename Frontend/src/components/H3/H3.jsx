@@ -1,3 +1,4 @@
+import PropType from 'prop-types'
 import styled from 'styled-components';
 
 const H3Container = ({ children, className }) => (
@@ -10,3 +11,7 @@ export const H3 = styled(H3Container)`
 	font-weight: 700;
 	color: #ffffff;
 `;
+
+H3.propTypes = {
+	children: PropType.node,
+};

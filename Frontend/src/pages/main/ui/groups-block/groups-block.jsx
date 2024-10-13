@@ -1,3 +1,4 @@
+import PropType from 'prop-types'
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
@@ -36,3 +37,7 @@ export const GroupBlock = styled(GroupBlockContainer)`
 		text-decoration: underline;
 	}
 `;
+
+GroupBlock.propTypes = {
+	groups: PropType.array.isRequired,
+};

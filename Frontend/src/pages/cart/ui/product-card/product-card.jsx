@@ -1,3 +1,4 @@
+import PropType from 'prop-types';
 import styled from 'styled-components';
 import {
 	ButtonIcon,
@@ -136,3 +137,10 @@ export const ProductCard = styled(ProductCardContainer)`
 		column-gap: 5px;
 	}
 `;
+
+ProductCard.propTypes = {
+	id: PropType.string,
+	title: PropType.string,
+	price: PropType.number,
+	image_url: PropType.string,
+};

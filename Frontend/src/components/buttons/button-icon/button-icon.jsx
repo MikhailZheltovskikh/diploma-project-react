@@ -1,3 +1,4 @@
+import PropType from 'prop-types'
 import styled from 'styled-components';
 
 const ButtonIconContainer = ({ className, children, maxWidth, ...props }) => {
@@ -21,3 +22,8 @@ export const ButtonIcon = styled(ButtonIconContainer)`
 	}
 
 `;
+
+ButtonIcon.propTypes = {
+	children: PropType.object.isRequired,
+	maxWidth: PropType.string,
+};

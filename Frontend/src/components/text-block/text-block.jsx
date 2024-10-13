@@ -1,3 +1,4 @@
+import PropType from 'prop-types'
 import styled from 'styled-components';
 
 const TextBlockContainer = ({ children, className, color }) => (
@@ -9,5 +10,10 @@ export const TextBlock = styled(TextBlockContainer)`
 	line-height: 120%;
 	font-weight: 400;
 	color: ${({ color = '#ffffff' }) => color};
-	
+
 `;
+
+TextBlock.propTypes = {
+	children: PropType.node,
+	color: PropType.string,
+};

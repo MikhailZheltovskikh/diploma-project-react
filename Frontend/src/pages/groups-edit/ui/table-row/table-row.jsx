@@ -1,3 +1,4 @@
+import PropType from 'prop-types'
 import styled from 'styled-components';
 
 const TableRowContainer = ({ className, children }) => (
@@ -9,3 +10,7 @@ export const TableRow = styled(TableRowContainer)`
 	grid-template-columns: 100px auto 130px;
 	column-gap: 15px;
 `;
+
+TableRow.propTypes = {
+	children: PropType.node,
+};

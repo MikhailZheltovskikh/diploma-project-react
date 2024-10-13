@@ -1,3 +1,4 @@
+import PropType from 'prop-types';
 import styled from 'styled-components';
 
 const H1Container = ({ children, className, color }) => (
@@ -9,5 +10,10 @@ export const H1 = styled(H1Container)`
 	font-size: 90px;
 	line-height: normal;
 	font-weight: 700;
-	color: ${({ color = '#fff' }) => color };
+	color: ${({ color = '#fff' }) => color};
 `;
+
+H1.propTypes = {
+	children: PropType.node.isRequired,
+	color: PropType.string,
+};

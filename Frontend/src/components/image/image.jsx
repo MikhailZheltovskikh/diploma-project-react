@@ -1,3 +1,4 @@
+import PropType from 'prop-types';
 import styled from 'styled-components';
 
 const ImageContainer = ({ className, children, width, height }) => (
@@ -21,3 +22,9 @@ export const Image = styled(ImageContainer)`
 		object-fit: contain;
 	}
 `;
+
+Image.propTypes = {
+	children: PropType.node.isRequired,
+	width: PropType.string,
+	height: PropType.string,
+};

@@ -10,7 +10,6 @@ export * from './image/image';
 export * from './text-block/text-block';
 export * from './aside-block/aside-block';
 export * from './icons';
-export * from './content/content';
 export * from './privat-content/privat-content';
 export * from './modal/modal';
 export * from './pagination/pagination';

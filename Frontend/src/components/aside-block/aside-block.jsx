@@ -1,3 +1,4 @@
+import PropType from 'prop-types'
 import { H3 } from '../H3/H3';
 import styled from 'styled-components';
 
@@ -24,3 +25,8 @@ export const AsideBlock = styled(AsideBlockContainer)`
 		border-radius: 35px;
 	}
 `;
+
+AsideBlock.propTypes = {
+	children: PropType.node.isRequired,
+	title: PropType.string.isRequired,
+}

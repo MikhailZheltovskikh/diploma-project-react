@@ -1,3 +1,4 @@
+import PropType from 'prop-types';
 import { Input } from '../input/input';
 import styled from 'styled-components';
 
@@ -5,7 +6,12 @@ const SearchContainer = ({ className, onChange, searchPhrase }) => {
 	return (
 		<div className={className}>
 			<div className="search__box">
-				<Input type="text" onChange={onChange} value={searchPhrase} placeholder="Поиск по заголовкам..." />
+				<Input
+					type="text"
+					onChange={onChange}
+					value={searchPhrase}
+					placeholder="Поиск по заголовкам..."
+				/>
 				<button></button>
 			</div>
 		</div>
@@ -37,3 +43,8 @@ export const Search = styled(SearchContainer)`
 		opacity: 0.7;
 	}
 `;
+
+Search.propTypes = {
+	onChange: PropType.func,
+	searchPhrase: PropType.string,
+};

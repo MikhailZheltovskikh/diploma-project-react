@@ -1,3 +1,4 @@
+import PropType from 'prop-types';
 import { useState } from 'react';
 import { ButtonIcon, IconCheck, IconDeleteBig, Input } from '../../../../components';
 import { TableRow } from '../table-row/table-row';
@@ -142,3 +143,16 @@ export const ProductRow = styled(ProductRowContainer)`
 		color: #000000;
 	}
 `;
+
+ProductRow.propTypes = {
+	id: PropType.string.isRequired,
+	title: PropType.string.isRequired,
+	group: PropType.string.isRequired,
+	groups: PropType.array.isRequired,
+	image_url: PropType.string.isRequired,
+	description: PropType.string.isRequired,
+	price: PropType.number.isRequired,
+	amount: PropType.number.isRequired,
+	onProductsRemove: PropType.func.isRequired,
+	editProductOnSave: PropType.func.isRequired,
+};

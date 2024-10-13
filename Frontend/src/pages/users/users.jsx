@@ -1,11 +1,4 @@
-import {
-	Content,
-	ContentContainer,
-	H2,
-	H3,
-	Loader,
-	PrivateContent,
-} from '../../components';
+import { ContentContainer, H2, H3, Loader, PrivateContent } from '../../components';
 import { TabelRow, UserRole } from './ui';
 import { useEffect } from 'react';
 import { ROLE } from '../../constans';
@@ -56,38 +49,34 @@ const UsersContainer = ({ className }) => {
 	return (
 		<PrivateContent access={[ROLE.ADMIN]} serverError={error}>
 			<div className={className}>
-				<Content error={error}>
-					<ContentContainer>
-						<H2>Пользователи</H2>
-						{isLoading ? (
-							<Loader />
-						) : (
-							<div className="tabel">
-								<TabelRow>
-									<H3 className="login-column">Логин</H3>
-									<H3 className="registed-at-column">
-										Дата регистрации
-									</H3>
-									<H3 className="role-column ">Роль</H3>
-								</TabelRow>
+				<ContentContainer>
+					<H2>Пользователи</H2>
+					{isLoading ? (
+						<Loader />
+					) : (
+						<div className="tabel">
+							<TabelRow>
+								<H3 className="login-column">Логин</H3>
+								<H3 className="registed-at-column">Дата регистрации</H3>
+								<H3 className="role-column ">Роль</H3>
+							</TabelRow>
 
-								{users.map(({ id, login, registeredAt, roleId }) => (
-									<UserRole
-										key={id}
-										id={id}
-										login={login}
-										registeredAt={registeredAt}
-										roleId={roleId}
-										roles={roles}
-										initialRoleId={roleId}
-										onRoleSave={onRoleSave}
-										onUserRemove={() => onUserRemove(id)}
-									/>
-								))}
-							</div>
-						)}
-					</ContentContainer>
-				</Content>
+							{users.map(({ id, login, registeredAt, roleId }) => (
+								<UserRole
+									key={id}
+									id={id}
+									login={login}
+									registeredAt={registeredAt}
+									roleId={roleId}
+									roles={roles}
+									initialRoleId={roleId}
+									onRoleSave={onRoleSave}
+									onUserRemove={() => onUserRemove(id)}
+								/>
+							))}
+						</div>
+					)}
+				</ContentContainer>
 			</div>
 		</PrivateContent>
 	);

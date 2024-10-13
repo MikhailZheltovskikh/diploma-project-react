@@ -1,3 +1,4 @@
+import PropType from 'prop-types';
 import { useState } from 'react';
 import {
 	Button,
@@ -197,3 +198,8 @@ export const CreateProduct = styled(CreateProductContainer)`
 		right: 20px;
 	}
 `;
+
+CreateProduct.propTypes = {
+	handleCloseModal: PropType.func.isRequired,
+	createHandleSubmit: PropType.func.isRequired,
+};

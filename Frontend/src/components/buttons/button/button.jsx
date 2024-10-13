@@ -1,3 +1,4 @@
+import PropType from 'prop-types';
 import styled from 'styled-components';
 
 const ButtonContainer = ({
@@ -36,3 +37,10 @@ export const Button = styled(ButtonContainer)`
 		opacity: 0.7;
 	}
 `;
+
+Button.propTypes = {
+	children: PropType.oneOfType([PropType.string, PropType.object]),
+	maxWidth: PropType.string,
+	margin: PropType.string,
+	disabled: PropType.bool,
+};

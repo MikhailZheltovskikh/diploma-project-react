@@ -1,3 +1,4 @@
+import PropType from 'prop-types'
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -14,3 +15,7 @@ export const ButtonIconLink = styled(ButtonIconLinkContainer)`
 		opacity: 0.7;
 	}
 `;
+
+ButtonIconLink.propTypes = {
+	children: PropType.node.isRequired,
+};

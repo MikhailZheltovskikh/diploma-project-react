@@ -1,3 +1,4 @@
+import PropType from 'prop-types';
 import { useState } from 'react';
 import { ButtonIcon, IconCheck, IconDeleteBig, Input } from '../../../../components';
 import { TableRow } from '../table-row/table-row';
@@ -78,3 +79,10 @@ export const GroupRow = styled(GroupRowContainer)`
 		color: #000000;
 	}
 `;
+
+GroupRow.propTypes = {
+	id: PropType.string.isRequired,
+	name: PropType.string.isRequired,
+	editGroupOnSave: PropType.func.isRequired,
+	onGroupRemove: PropType.func.isRequired,
+};

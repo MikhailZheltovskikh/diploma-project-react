@@ -1,3 +1,4 @@
+import PropType from 'prop-types'
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -22,3 +23,7 @@ export const ButtonLink = styled(ButtonLinkContainer)`
 		opacity: 0.7;
 	}
 `;
+
+ButtonLink.propTypes = {
+	children: PropType.string.isRequired,
+};

@@ -1,3 +1,4 @@
+import PropType from 'prop-types'
 import { H2 } from '../H2/H2';
 import { TextBlock } from '../text-block/text-block';
 import styled from 'styled-components';
@@ -16,3 +17,7 @@ export const Error = styled(ErrorContainer)`
 	align-items: center;
 	gap: 20px;
 `;
+
+Error.propTypes = {
+	error: PropType.string.isRequired,
+};
