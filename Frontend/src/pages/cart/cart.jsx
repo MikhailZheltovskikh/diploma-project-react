@@ -1,25 +1,71 @@
 import styled from 'styled-components';
-import { AsideBlock, Button, ContentContainer, H2, TextBlock } from '../../components';
+import {
+	AsideBlock,
+	Button,
+	ContentContainer,
+	H2,
+	H3,
+	TextBlock,
+} from '../../components';
 import { ProductCard } from './ui';
-import { useSelector } from 'react-redux';
-import { selectUserCart } from '../../redux/selectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectCart, selectUserId } from '../../redux/selectors';
+import {
+	clearProductToCart,
+	clearProductToCartAsync,
+	CLOSE_MODAL,
+	openModal,
+} from '../../redux/action';
 
 const CartContainer = ({ className }) => {
-	const products = useSelector(selectUserCart);
+	const dispatch = useDispatch();
+	const userId = useSelector(selectUserId);
 
-	let sum = 0;
+	const { cart, totalPrice } = useSelector(selectCart);
 
-	products.forEach((product) => {
-		sum += Number(product.price);
-	});
+	if (cart.length <= 0) {
+		return (
+			<div className={className}>
+				<H2>Корзина</H2>
+				<H3 className="subtitle">Корзина пуста</H3>
+			</div>
+		);
+	}
+
+	const hendelClearCart = () => {
+		dispatch(
+			openModal({
+				text: 'Вы действительно хотите отчистить корзину?',
+				onConfirm: () => {
+					if (userId) {
+						dispatch(clearProductToCartAsync());
+					} else {
+						dispatch(clearProductToCart());
+					}
+					dispatch(CLOSE_MODAL);
+				},
+				onCancel: () => dispatch(CLOSE_MODAL),
+			}),
+		);
+	};
 
 	return (
 		<div className={className}>
 			<ContentContainer>
 				<H2>Корзина</H2>
+				{cart.length > 1 && (
+					<Button
+						onClick={hendelClearCart}
+						maxWidth="200px"
+						margin="10px 0 0 auto"
+					>
+						Отчистить корзину
+					</Button>
+				)}
+
 				<div className="basekt">
 					<div className="basekt-content">
-						{products.map(({ id, title, image_url, price }) => (
+						{cart.map(({ id, title, image_url, price }) => (
 							<ProductCard
 								id={id}
 								key={id}
@@ -31,7 +77,7 @@ const CartContainer = ({ className }) => {
 					</div>
 					<AsideBlock title="В корзине">
 						<TextBlock color="#000" className="aside__amount">
-							{products.length} товар(а)
+							{cart.length} товар(а)
 						</TextBlock>
 						<div className="aside__line"></div>
 						<div className="aside__price-box">
@@ -39,7 +85,7 @@ const CartContainer = ({ className }) => {
 								Итого:
 							</TextBlock>
 							<H2 color="#FFCC00" className="basekt-aside__price">
-								{sum}₽
+								{totalPrice}₽
 							</H2>
 						</div>
 						<Button className="basekt-aside__order">Оформить заказ</Button>
@@ -91,6 +137,11 @@ export const Cart = styled(CartContainer)`
 	}
 
 	.basekt-aside__order {
+		margin-top: 20px;
+	}
+
+	.subtitle {
+		text-align: center;
 		margin-top: 20px;
 	}
 `;

@@ -4,16 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useState } from 'react';
-
+import { useEffect, useState } from 'react';
 import { ROLE } from '../../constans';
-import styled from 'styled-components';
 import { useResetForm } from '../../hooks';
-import { request } from '../../utils';
-
-import { setUser } from '../../redux/action';
-import { selectUserRole } from '../../redux/selectors';
-
+import { selectAppError, selectUserRole } from '../../redux/selectors';
+import { registerAsync } from '../../redux/action/auth';
+import styled from 'styled-components';
 
 const regFormSchema = yup.object().shape({
 	login: yup
@@ -52,6 +48,8 @@ const RegistrationContainer = ({ className }) => {
 		resolver: yupResolver(regFormSchema),
 	});
 
+	const error = useSelector(selectAppError);
+
 	const [serverError, setServerError] = useState(null);
 
 	const dispatch = useDispatch();
@@ -60,16 +58,14 @@ const RegistrationContainer = ({ className }) => {
 
 	useResetForm(reset);
 
-	const onSubmit = ({ login, password }) => {
-		request('/register', 'POST', { login, password }).then(({ error, user }) => {
-			if (error) {
-				setServerError(`Ошибка запроса: ${error}`);
-				return;
-			}
+	useEffect(()=>{
+		if(error){
+			setServerError(error)
+		}
+	},[error])
 
-			dispatch(setUser(user));
-			sessionStorage.setItem('userData', JSON.stringify(user));
-		});
+	const onSubmit = ({ login, password }) => {
+		dispatch(registerAsync(login, password));
 	};
 
 	const formError =

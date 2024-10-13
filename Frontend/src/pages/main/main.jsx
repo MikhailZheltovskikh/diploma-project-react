@@ -39,53 +39,45 @@ const MainContainer = ({ className }) => {
 	};
 
 	return (
-		<>
-			<main className={className}>
-				<ContentContainer>
-					<Search searchPhrase={searchPhrase} onChange={onSearch} />
-					{isLoading ? (
-						<Loader />
-					) : (
-						<div className="main__inner">
-							<AsideBlock title="Каталог">
-								<GroupBlock groups={groups} />
-							</AsideBlock>
-							<div className="content">
-								<Filter setPriceSort={setPriceSort} />
-								<div className="content__inner">
-									{products.map(
-										({
-											id,
-											title,
-											image_url,
-											description,
-											price,
-										}) => (
-											<ProductsCard
-												id={id}
-												key={id}
-												title={title}
-												image_url={image_url}
-												description={description}
-												price={price}
-											/>
-										),
-									)}
-								</div>
-
-								{lastPage > 1 && (
-									<Pagination
-										page={page}
-										lastPage={lastPage}
-										setPage={setPage}
-									/>
+		<main className={className}>
+			<ContentContainer>
+				<Search searchPhrase={searchPhrase} onChange={onSearch} />
+				{isLoading ? (
+					<Loader />
+				) : (
+					<div className="main__inner">
+						<AsideBlock title="Каталог">
+							<GroupBlock groups={groups} />
+						</AsideBlock>
+						<div className="content">
+							<Filter setPriceSort={setPriceSort} />
+							<div className="content__inner">
+								{products.map(
+									({ id, title, image_url, description, price }) => (
+										<ProductsCard
+											id={id}
+											key={id}
+											title={title}
+											image_url={image_url}
+											description={description}
+											price={price}
+										/>
+									),
 								)}
 							</div>
+
+							{lastPage > 1 && (
+								<Pagination
+									page={page}
+									lastPage={lastPage}
+									setPage={setPage}
+								/>
+							)}
 						</div>
-					)}
-				</ContentContainer>
-			</main>
-		</>
+					</div>
+				)}
+			</ContentContainer>
+		</main>
 	);
 };
 

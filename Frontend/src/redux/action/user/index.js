@@ -7,3 +7,5 @@ export * from './edit-user';
 export * from './edit-user-async';
 export * from './remove-user';
 export * from './remove-user-async';
+export * from './user-error';
+export * from './user-reset-error';

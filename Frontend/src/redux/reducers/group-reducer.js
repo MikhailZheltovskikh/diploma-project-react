@@ -8,6 +8,16 @@ const initialGroupState = {
 
 export const groupReducer = (state = initialGroupState, action) => {
 	switch (action.type) {
+		case ACTION__TYPE.GROUP_ERROR:
+			return {
+				...state,
+				error: action.payload,
+			};
+		case ACTION__TYPE.GROUP_RESET_ERROR:
+			return {
+				...state,
+				error: null,
+			};
 		case ACTION__TYPE.ADD_GROUP:
 			return {
 				...state,

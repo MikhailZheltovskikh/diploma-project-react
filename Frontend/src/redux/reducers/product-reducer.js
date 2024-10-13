@@ -18,6 +18,20 @@ const initialProductState = {
 
 export const productReducer = (state = initialProductState, action) => {
 	switch (action.type) {
+		case ACTION__TYPE.PRODUCT_ERROR:
+			return {
+				...state,
+				products: {
+					error: action.payload,
+				},
+			};
+		case ACTION__TYPE.PRODUCT_RESET_ERROR:
+			return {
+				...state,
+				products: {
+					error: null,
+				},
+			};
 		case ACTION__TYPE.ADD_PRODUCT:
 			return {
 				...state,

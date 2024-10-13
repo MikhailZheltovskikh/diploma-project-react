@@ -1,16 +1,15 @@
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link, Navigate } from 'react-router-dom';
 import { H2, Input, Button, AuthFormError } from '../../components';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUser } from '../../redux/action';
-import styled from 'styled-components';
-import { selectUserRole } from '../../redux/selectors';
+import { loginAsync } from '../../redux/action';
+import { selectAppError, selectUserRole } from '../../redux/selectors';
 import { ROLE } from '../../constans';
 import { useResetForm } from '../../hooks';
-import { request } from '../../utils';
+import styled from 'styled-components';
 
 const authFormSchema = yup.object().shape({
 	login: yup
@@ -60,22 +59,22 @@ const AuthorizationContainer = ({ className }) => {
 		resolver: yupResolver(authFormSchema),
 	});
 
+	const error = useSelector(selectAppError);
+
 	const [serverError, setServerError] = useState(null);
 
 	const dispatch = useDispatch();
 
 	useResetForm(reset);
 
+	useEffect(()=>{
+		if(error){
+			setServerError(error)
+		}
+	},[error])
+	
 	const onSubmit = ({ login, password }) => {
-		request("/login", "POST", {login, password}).then(({ error, user }) => {
-			if (error) {
-				setServerError(`Ошибка запроса: ${error}`);
-				return;
-			}
-
-			dispatch(setUser(user));
-			sessionStorage.setItem('userData', JSON.stringify(user));
-		});
+		dispatch(loginAsync(login, password));
 	};
 
 	const formError = errors?.login?.message || errors?.password?.message;

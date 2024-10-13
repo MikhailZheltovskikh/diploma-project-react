@@ -12,14 +12,14 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import styled from 'styled-components';
 
-import { selectUserCart, selectUserLogin, selectUserRole } from '../../redux/selectors';
+import { selectCart, selectUserLogin, selectUserRole } from '../../redux/selectors';
 import { logout } from '../../redux/action';
 import { ROLE } from '../../constans';
 
 const HeaderContainer = ({ className }) => {
 	const roleId = useSelector(selectUserRole);
 	const login = useSelector(selectUserLogin);
-	const amountCart = useSelector(selectUserCart);
+	const { cart } = useSelector(selectCart);
 
 	const dispatch = useDispatch();
 
@@ -41,8 +41,8 @@ const HeaderContainer = ({ className }) => {
 					<div className="header-buttons">
 						<ButtonIconLink to={'/cart'} className="cart">
 							<IconBasket />
-							{amountCart && amountCart.length > 0 && (
-								<span className="amount">{amountCart.length}</span>
+							{cart && cart.length > 0 && (
+								<span className="amount">{cart.length}</span>
 							)}
 						</ButtonIconLink>
 						{roleId === ROLE.GUEST ? (

@@ -98,6 +98,17 @@ const ProductsEditContainer = ({ className }) => {
 		startDelaySearch(!shouldSearch);
 	};
 
+	const namesColunm = [
+		'Id',
+		'Наименование',
+		'Категория',
+		'Описание',
+		'Стоимость',
+		'Фото',
+		'Кол-во',
+		'Действия',
+	];
+
 	return (
 		<PrivateContent access={[ROLE.ADMIN]}>
 			<div className={className}>
@@ -124,30 +135,13 @@ const ProductsEditContainer = ({ className }) => {
 								)}
 
 								<TableRow>
-									<TextBlock className="products-row-item">
-										Id
-									</TextBlock>
-									<TextBlock className="products-row-item">
-										Наименование
-									</TextBlock>
-									<TextBlock className="products-row-item">
-										Категория
-									</TextBlock>
-									<TextBlock className="products-row-item">
-										Описание
-									</TextBlock>
-									<TextBlock className="products-row-item">
-										Стоимость
-									</TextBlock>
-									<TextBlock className="products-row-item">
-										Фото
-									</TextBlock>
-									<TextBlock className="products-row-item">
-										Кол-во
-									</TextBlock>
-									<TextBlock className="products-row-item">
-										Действия
-									</TextBlock>
+									{namesColunm.map((name, index) => {
+										return (
+											<TextBlock key={index} className="products-row-item">
+												{name}
+											</TextBlock>
+										);
+									})}
 								</TableRow>
 
 								{products.map(

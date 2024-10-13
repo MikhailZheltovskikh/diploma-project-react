@@ -2,24 +2,39 @@ import { Button, ContentContainer, H2, H3, Image, TextBlock } from '../../compon
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectProduct } from '../../redux/selectors';
-// import { loadProductAsync, addProductToCart } from '../../redux/action';
-import { addProductToCart } from '../../redux/action';
+import { selectProduct, selectUserId } from '../../redux/selectors';
 import styled from 'styled-components';
 import { getProductAsync } from '../../redux/action/product';
-
+import { addProductToCart, addProductToCartAsync } from '../../redux/action';
 
 const ProductContainer = ({ className }) => {
 	const dispatch = useDispatch();
 	const params = useParams();
-	const product = useSelector(selectProduct);
+
+	const userId = useSelector(selectUserId);
+
+	const { id, image_url, title, amount, description, price } =
+		useSelector(selectProduct);
 
 	useEffect(() => {
 		dispatch(getProductAsync(params.id));
 	}, [dispatch, params.id]);
 
 	const handleAddToCart = () => {
-		dispatch(addProductToCart(product));
+		const item = {
+			id,
+			title,
+			image_url,
+			price,
+			count: 1,
+		};
+
+		if(userId){
+			dispatch(addProductToCartAsync(item));
+		} else{
+			dispatch(addProductToCart(item));
+		}
+
 	};
 
 	return (
@@ -27,24 +42,22 @@ const ProductContainer = ({ className }) => {
 			<ContentContainer>
 				<div className={className}>
 					<Image className="product-image" width="500px" height="400px">
-						<img src={product.image_url} alt="" />
+						<img src={image_url} alt="" />
 					</Image>
 					<div className="product-content">
-						<H3>{product.title}</H3>
-						<TextBlock>Количество: {product.amount} шт.</TextBlock>
+						<H3>{title}</H3>
+						<TextBlock>Количество: {amount} шт.</TextBlock>
 						<TextBlock className="product-characteristics">
-							{product.description}
+							{description}
 						</TextBlock>
 						<div className="product-bottom">
-							<H2 color="#FFCC00">{product.price}₽</H2>
+							<H2 color="#FFCC00">{price}₽</H2>
 							<Button onClick={handleAddToCart} maxWidth="220px">
 								Купить
 							</Button>
 						</div>
 						<div className="product-line"></div>
-						<TextBlock className="product-id">
-							Id товара: {product.id}
-						</TextBlock>
+						<TextBlock className="product-id">Id товара: {id}</TextBlock>
 					</div>
 				</div>
 			</ContentContainer>

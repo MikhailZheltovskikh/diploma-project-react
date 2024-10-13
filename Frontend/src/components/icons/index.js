@@ -8,3 +8,5 @@ export * from './icon-edit';
 export * from './icon-products-edit';
 export * from './icon-check';
 export * from './icon-close';
+export * from './icon-inc';
+export * from './icon-decr';

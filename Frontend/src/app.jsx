@@ -1,13 +1,23 @@
 import { Route, Routes } from 'react-router-dom';
 import { Header, Modal } from './components';
-import { Authorization, Registration, Main, User, Product, ProductsEdit, Catalog, Cart, GroupsEdit } from './pages';
+import {
+	Authorization,
+	Registration,
+	Main,
+	User,
+	Product,
+	ProductsEdit,
+	Catalog,
+	Cart,
+	GroupsEdit,
+	NotFound,
+} from './pages';
 import { useLayoutEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import styled from 'styled-components';
-import { setUser } from './redux/action';
-
-
+import { getProductToCartAsync, setProductToCart, setUser } from './redux/action';
+import { selectUserId } from './redux/selectors';
 
 const Wrapper = styled.div`
 	min-height: 100%;
@@ -21,8 +31,26 @@ const Page = styled.div`
 
 export const App = () => {
 	const dispatch = useDispatch();
+	const userId = useSelector(selectUserId);
 
 	useLayoutEffect(() => {
+		if (userId) {
+			dispatch(getProductToCartAsync());
+		} else {
+			const currentCartDataJSON = localStorage.getItem('cart');
+			if(!currentCartDataJSON){
+				localStorage.setItem('cart', JSON.stringify({ cart: [], totalPrice: 0 }));
+			}
+			const currentCartData = JSON.parse(currentCartDataJSON);
+
+			dispatch(
+				setProductToCart({
+					cart: currentCartData.cart,
+					totalPrice: Number(currentCartData.totalPrice),
+				}),
+			);
+		}
+
 		const currentUserDataJSON = sessionStorage.getItem('userData');
 		if (!currentUserDataJSON) {
 			return;
@@ -36,7 +64,7 @@ export const App = () => {
 				roleId: Number(currentUserData.roleId),
 			}),
 		);
-	}, [dispatch]);
+	}, [dispatch, userId]);
 
 	return (
 		<Wrapper>
@@ -54,10 +82,11 @@ export const App = () => {
 					<Route path="/products-edit" element={<ProductsEdit />} />
 					<Route path="/groups-edit" element={<GroupsEdit />} />
 					<Route path="/cart" element={<Cart />} />
-					<Route path="*" element={<div>Ошибка</div>} />
+					<Route path="*" element={<NotFound/>} />
+					<Route path="/404" element={<NotFound/>} />
 				</Routes>
 			</Page>
-			<Modal/>
+			<Modal />
 		</Wrapper>
 	);
 };

@@ -1,6 +1,13 @@
 import styled from 'styled-components';
 
-const ButtonContainer = ({ className, children, maxWidth, margin, disabled, ...props }) => {
+const ButtonContainer = ({
+	className,
+	children,
+	maxWidth,
+	margin,
+	disabled,
+	...props
+}) => {
 	return (
 		<button className={className} {...props}>
 			{children}
@@ -9,6 +16,7 @@ const ButtonContainer = ({ className, children, maxWidth, margin, disabled, ...p
 };
 
 export const Button = styled(ButtonContainer)`
+	display: block;
 	padding: 16px 30px;
 	margin: ${({ margin = '0' }) => margin};
 	width: 100%;

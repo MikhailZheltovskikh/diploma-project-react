@@ -6,3 +6,5 @@ export * from './get-groups-async';
 export * from './remove-group';
 export * from './remove-group-async';
 export * from './set-groups-data';
+export * from './group-error';
+export * from './group-reset-error';

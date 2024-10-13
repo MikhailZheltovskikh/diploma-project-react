@@ -5,24 +5,31 @@ const initialUsersState = {
 	id: null,
 	login: null,
 	roleId: ROLE.GUEST,
-	cart: [],
 	session: null,
 	users: {
 		isLoading: true,
-		error: null,
 		users: [],
 		roles: [],
+		error: null,
 	},
 };
 
 export const userReducer = (state = initialUsersState, action) => {
 	switch (action.type) {
-		case ACTION__TYPE.ADD_PPRODUCT_CART:
+		case ACTION__TYPE.PRODUCT_ERROR:
 			return {
 				...state,
-				cart: [...state.cart, action.payload],
+				users: {
+					error: action.payload,
+				},
 			};
-
+		case ACTION__TYPE.PRODUCT_RESET_ERROR:
+			return {
+				...state,
+				users: {
+					error: null,
+				},
+			};
 		case ACTION__TYPE.EDIT_USER:
 			return {
 				...state,
