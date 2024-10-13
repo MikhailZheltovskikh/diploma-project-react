@@ -1,5 +1,7 @@
 import { PAGINATION_LIMIT } from '../../../constans';
 import { request } from '../../../utils';
+import { openModalError } from '../modal';
+import { productError } from './product-error';
 import { setProductsData } from './set-products-data';
 
 export const getProductsAsync =
@@ -25,9 +27,25 @@ export const getProductsAsync =
 
 		try {
 			const response = await req;
+
+			if (response.error) {
+				dispatch(productError(response.error));
+				dispatch(
+					openModalError({
+						error: response.error,
+					}),
+				);
+				return;
+			}
+
 			const { products, lastPage } = response.data;
 			dispatch(setProductsData(products, lastPage));
 		} catch (error) {
-			// dispatch(setErrorMessage(error.message));
+			console.log('Возникла ошибка при обращении к серверу');
+			dispatch(
+				openModalError({
+					error: 'При получении товаров произошла ошибка',
+				}),
+			);
 		}
 	};

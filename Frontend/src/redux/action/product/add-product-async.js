@@ -1,5 +1,7 @@
 import { request } from "../../../utils";
+import { openModalError } from "../modal";
 import { addProduct } from "./add-product";
+import { productError } from "./product-error";
 
 
 export const addProductAsync = (saveProductData) => async (dispatch) => {
@@ -12,9 +14,25 @@ export const addProductAsync = (saveProductData) => async (dispatch) => {
 			group: saveProductData.group,
 			amount: saveProductData.amount,
 		});
+
+		if (response.error) {
+			dispatch(productError(response.error));
+			dispatch(
+				openModalError({
+					error: response.error,
+				}),
+			);
+			return;
+		}
+
 		const newProduct = { ...saveProductData, id: response.data.id };
 		dispatch(addProduct(newProduct));
 	} catch (error) {
-		// dispatch(setErrorMessage(error.message));
+		console.log('Возникла ошибка при обращении к серверу', error);
+		dispatch(
+			openModalError({
+				error: 'При добавлении товара произошла ошибка',
+			}),
+		);
 	}
 };

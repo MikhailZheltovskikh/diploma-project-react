@@ -1,13 +1,31 @@
 import { request } from '../../../utils';
+import { openModalError } from '../modal';
 import { editGroup } from './edit-group';
+import { groupError } from './group-error';
 
 export const editGroupAsync = (saveGroupData) => async (dispatch) => {
 	try {
-		const updatedGroup = await request(`/groups/${saveGroupData.id}`, 'PATCH', {
+		const response = await request(`/groups/${saveGroupData.id}`, 'PATCH', {
 			name: saveGroupData.name,
 		});
-		dispatch(editGroup(updatedGroup.data));
+
+		if (response.error) {
+			dispatch(groupError(response.error));
+			dispatch(
+				openModalError({
+					error: response.error,
+				}),
+			);
+			return;
+		}
+
+		dispatch(editGroup(response.data));
 	} catch (error) {
-		// dispatch(setErrorMessage(error.message));
+		console.log('Возникла ошибка при обращении к серверу');
+		dispatch(
+			openModalError({
+				error: 'Не удалось обновить группу',
+			}),
+		);
 	}
 };

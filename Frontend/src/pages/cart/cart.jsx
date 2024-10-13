@@ -35,7 +35,7 @@ const CartContainer = ({ className }) => {
 	const hendelClearCart = () => {
 		dispatch(
 			openModal({
-				text: 'Вы действительно хотите отчистить корзину?',
+				text: 'Вы действительно хотите очистить корзину?',
 				onConfirm: () => {
 					if (userId) {
 						dispatch(clearProductToCartAsync());

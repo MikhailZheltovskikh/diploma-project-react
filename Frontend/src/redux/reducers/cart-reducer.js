@@ -25,6 +25,7 @@ export const cartReducer = (state = initialCartState, action) => {
 				cart: action.payload.cart,
 				totalPrice: action.payload.totalPrice,
 				isLoading: false,
+				error: null,
 			};
 
 		case ACTION__TYPE.DEC_PRODUCT_TO_CART:
@@ -32,6 +33,7 @@ export const cartReducer = (state = initialCartState, action) => {
 				...state,
 				cart: action.payload.cart,
 				totalPrice: action.payload.totalPrice,
+				error: null,
 			};
 
 		case ACTION__TYPE.ADD_PRODUCT_TO_CART:
@@ -40,6 +42,7 @@ export const cartReducer = (state = initialCartState, action) => {
 				cart: action.payload.cart,
 				totalPrice: action.payload.totalPrice,
 				isLoading: false,
+				error: null,
 			};
 
 		case ACTION__TYPE.CLEAR_PRODUCT_TO_CART:
@@ -48,11 +51,13 @@ export const cartReducer = (state = initialCartState, action) => {
 				cart: [],
 				totalPrice: 0,
 				isLoading: false,
+				error: null,
 			};
 		case ACTION__TYPE.SET_PRODUCT_TO_CART:
 			return {
 				...state,
 				...action.payload,
+				error: null,
 			};
 
 		default:

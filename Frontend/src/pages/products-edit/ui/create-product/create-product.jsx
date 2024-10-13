@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
 	Button,
 	ButtonIcon,
@@ -9,19 +9,16 @@ import {
 } from '../../../../components';
 import { CreateRow } from './ui';
 import styled from 'styled-components';
-import { request } from '../../../../utils';
+import { useSelector } from 'react-redux';
+import { selectGroup } from '../../../../redux/selectors';
 
 const CreateProductContainer = ({ className, handleCloseModal, createHandleSubmit }) => {
-	const [groups, setGroups] = useState([]);
+	const { groups } = useSelector(selectGroup);
 
-	useEffect(() => {
-		request('/groups').then(({ data: dataGroups }) => {
-			setGroups(dataGroups);
-		});
-	}, []);
+	const groupIdDefault = '670be52b6dca208e2afe640f';
 
 	const [titleValue, setTitleValue] = useState('');
-	const [groupValue, setGroupValue] = useState('');
+	const [groupValue, setGroupValue] = useState(groupIdDefault);
 	const [descriptionValue, setDescriptionValue] = useState('');
 	const [priceValue, setPriceValue] = useState('');
 	const [imageUrlValue, setImageUrlValue] = useState('');

@@ -10,7 +10,7 @@ import { TabelRow, UserRole } from './ui';
 import { useEffect } from 'react';
 import { ROLE } from '../../constans';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectUsers } from '../../redux/selectors';
+import { selectUserRole, selectUsers } from '../../redux/selectors';
 import { editUserAsync, getUsersAsync, removeUserAsync } from '../../redux/action';
 import styled from 'styled-components';
 import { CLOSE_MODAL, openModal } from '../../redux/action';
@@ -19,10 +19,13 @@ const UsersContainer = ({ className }) => {
 	const dispatch = useDispatch();
 
 	const { users, roles, isLoading, error } = useSelector(selectUsers);
+	const roleId = useSelector(selectUserRole);
 
 	useEffect(() => {
-		dispatch(getUsersAsync());
-	}, [dispatch]);
+		if (roleId === ROLE.ADMIN) {
+			dispatch(getUsersAsync());
+		}
+	}, [dispatch, roleId]);
 
 	const onUserRemove = (userId) => {
 		dispatch(

@@ -1,11 +1,28 @@
 import { request } from '../../../utils';
+import { openModalError } from '../modal';
+import { groupError } from './group-error';
 import { removeGroup } from './remove-group';
 
 export const removeGroupAsync = (groupId) => async (dispatch) => {
 	try {
-		await request(`/groups/${groupId}`, 'DELETE');
+		const response = await request(`/groups/${groupId}`, 'DELETE');
+		if (response.error) {
+			dispatch(groupError(response.error));
+			dispatch(
+				openModalError({
+					error: response.error,
+				}),
+			);
+			return;
+		}
+
 		dispatch(removeGroup(groupId));
 	} catch (error) {
-		// dispatch(setErrorMessage(error.message));
+		console.log('Возникла ошибка при обращении к серверу');
+		dispatch(
+			openModalError({
+				error: 'При удалении группы произошла ошибка',
+			}),
+		);
 	}
 };

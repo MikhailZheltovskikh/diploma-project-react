@@ -1,6 +1,6 @@
 import { request } from '../../../utils';
+import { openModalError } from '../modal';
 import { cartError } from './cart-error';
-import { cartResetError } from './cart-reset-error';
 import { clearProductToCart } from './clear-product-to-cart';
 
 export const clearProductToCartAsync = () => async (dispatch) => {
@@ -8,12 +8,21 @@ export const clearProductToCartAsync = () => async (dispatch) => {
 		const response = await request(`/cart/clear`, 'DELETE');
 		if (response.error) {
 			dispatch(cartError(response.error));
+			dispatch(
+				openModalError({
+					error: response.error,
+				}),
+			);
 			return;
 		}
 
 		dispatch(clearProductToCart());
-		dispatch(cartResetError());
 	} catch (error) {
 		console.log('Возникла ошибка при обращении к серверу');
+		dispatch(
+			openModalError({
+				error: 'При очистке корзины произошла ошибка',
+			}),
+		);
 	}
 };

@@ -1,0 +1,1 @@
+export const selectModalError = ({ app }) => app.modalError;

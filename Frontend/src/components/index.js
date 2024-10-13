@@ -17,4 +17,6 @@ export * from './pagination/pagination';
 export * from './search/search';
 export * from './loader/loader';
 export * from './filter/filter';
+export * from './error/error';
+export * from './error-modal/error-modal';
 

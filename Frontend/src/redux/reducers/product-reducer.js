@@ -36,7 +36,7 @@ export const productReducer = (state = initialProductState, action) => {
 			return {
 				...state,
 				products: {
-					products: [...state.products, action.payload],
+					products: [...state.products.products, action.payload],
 					lastPage: 1,
 					isLoading: false,
 				},

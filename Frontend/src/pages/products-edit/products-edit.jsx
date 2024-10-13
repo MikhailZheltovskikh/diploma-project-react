@@ -16,7 +16,7 @@ import { ROLE } from '../../constans';
 import styled from 'styled-components';
 import { CreateProduct } from './ui/create-product/create-product';
 import { debonce } from '../../utils';
-import { selectGroup, selectProducts } from '../../redux/selectors';
+import { selectGroup, selectProducts, selectUserRole } from '../../redux/selectors';
 import { CLOSE_MODAL, openModal, getGroupsAsync } from '../../redux/action';
 import { getProductsAsync } from '../../redux/action/product/get-products-acync';
 import {
@@ -36,11 +36,14 @@ const ProductsEditContainer = ({ className }) => {
 
 	const { groups } = useSelector(selectGroup);
 	const { products, lastPage, isLoading } = useSelector(selectProducts);
+	const roleId = useSelector(selectUserRole);
 
 	useEffect(() => {
-		dispatch(getProductsAsync(searchPhrase, page));
-		dispatch(getGroupsAsync());
-	}, [dispatch, page, searchPhrase]);
+		if (roleId === ROLE.ADMIN) {
+			dispatch(getProductsAsync(searchPhrase, page));
+			dispatch(getGroupsAsync());
+		}
+	}, [dispatch, page, searchPhrase, roleId]);
 
 	const handleOpenModal = () => {
 		setIsModalOpen(true);
@@ -137,7 +140,10 @@ const ProductsEditContainer = ({ className }) => {
 								<TableRow>
 									{namesColunm.map((name, index) => {
 										return (
-											<TextBlock key={index} className="products-row-item">
+											<TextBlock
+												key={index}
+												className="products-row-item"
+											>
 												{name}
 											</TextBlock>
 										);

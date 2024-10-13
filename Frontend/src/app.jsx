@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import { Header, Modal } from './components';
+import { ErrorModal, Header, Modal } from './components';
 import {
 	Authorization,
 	Registration,
@@ -87,6 +87,8 @@ export const App = () => {
 				</Routes>
 			</Page>
 			<Modal />
+			<ErrorModal />
+
 		</Wrapper>
 	);
 };

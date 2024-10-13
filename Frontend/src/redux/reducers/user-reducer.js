@@ -16,14 +16,14 @@ const initialUsersState = {
 
 export const userReducer = (state = initialUsersState, action) => {
 	switch (action.type) {
-		case ACTION__TYPE.PRODUCT_ERROR:
+		case ACTION__TYPE.USER_ERROR:
 			return {
 				...state,
 				users: {
 					error: action.payload,
 				},
 			};
-		case ACTION__TYPE.PRODUCT_RESET_ERROR:
+		case ACTION__TYPE.USER_RESET_ERROR:
 			return {
 				...state,
 				users: {
@@ -38,6 +38,7 @@ export const userReducer = (state = initialUsersState, action) => {
 					users: state.users.users.map((user) => {
 						return user.id === action.payload.id ? action.payload : user;
 					}),
+					error: null,
 				},
 			};
 		case ACTION__TYPE.REMOVE_USER:
@@ -46,6 +47,7 @@ export const userReducer = (state = initialUsersState, action) => {
 				users: {
 					...state.users,
 					users: state.users.users.filter((user) => user.id !== action.payload),
+					error: null,
 				},
 			};
 		case ACTION__TYPE.SET_ROLES:
@@ -54,8 +56,9 @@ export const userReducer = (state = initialUsersState, action) => {
 				users: {
 					...state.users,
 					roles: action.payload,
+					isLoading: false,
+					error: null,
 				},
-				isLoading: false,
 			};
 
 		case ACTION__TYPE.SET_USERS:
@@ -65,6 +68,7 @@ export const userReducer = (state = initialUsersState, action) => {
 					...state.users,
 					users: action.payload,
 					isLoading: false,
+					error: null,
 				},
 			};
 		case ACTION__TYPE.SET_USER:

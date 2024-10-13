@@ -1,11 +1,28 @@
 import { request } from '../../../utils';
+import { openModalError } from '../modal';
 import { removeUser } from './remove-user';
+import { userError } from './user-error';
 
 export const removeUserAsync = (userId) => async (dispatch) => {
 	try {
-		await request(`/users/${userId}`, 'DELETE')
+		const response = await request(`/users/${userId}`, 'DELETE');
+		if (response.error) {
+			dispatch(userError(response.error));
+			dispatch(
+				openModalError({
+					error: response.error,
+				}),
+			);
+			return;
+		}
+
 		dispatch(removeUser(userId));
 	} catch (error) {
-		// dispatch(setErrorMessage(error.message));
+		console.log('Возникла ошибка при обращении к серверу');
+		dispatch(
+			openModalError({
+				error: 'При удалении пользователя произошла ошибка',
+			}),
+		);
 	}
 };

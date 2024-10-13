@@ -1,6 +1,6 @@
 import { request } from '../../../utils';
 import { authError } from './auth-error';
-import { authResetError } from './auth-reset-error';
+// import { authResetError } from './auth-reset-error';
 import { setUser } from '../user';
 
 export const loginAsync = (login, password) => async (dispatch) => {
@@ -13,7 +13,7 @@ export const loginAsync = (login, password) => async (dispatch) => {
 		}
 
 		dispatch(setUser(response.user));
-		dispatch(authResetError());
+		// dispatch(authResetError());
 		sessionStorage.setItem('userData', JSON.stringify(response.user));
 	} catch (error) {
 		console.log(error);

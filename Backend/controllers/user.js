@@ -2,19 +2,19 @@ const User = require('../modules/User');
 const ROLES = require('../constants/roles');
 
 function getUsers() {
-    return User.find();
-}
-
-function getRoles() {
     try {
-        return [
-            { id: ROLES.ADMIN, name: 'Admin' },
-            { id: ROLES.MODERATOR, name: 'Moderator' },
-            { id: ROLES.USER, name: 'User' },
-        ];
+        return User.find();
     } catch (error) {
         throw new Error(error.message || 'Неизвестная ошибка...');
     }
+}
+
+function getRoles() {
+    return [
+        { id: ROLES.ADMIN, name: 'Admin' },
+        { id: ROLES.MODERATOR, name: 'Moderator' },
+        { id: ROLES.USER, name: 'User' },
+    ];
 }
 
 // delete

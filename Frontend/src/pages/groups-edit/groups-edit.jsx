@@ -9,7 +9,7 @@ import {
 } from '../../components';
 import { GroupRow, TableRow } from './ui';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectGroup } from '../../redux/selectors';
+import { selectGroup, selectUserRole } from '../../redux/selectors';
 import { ROLE } from '../../constans';
 import {
 	addGroupAsync,
@@ -28,10 +28,13 @@ const GroupsEditContainer = ({ className }) => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const { groups, isLoading } = useSelector(selectGroup);
+	const roleId = useSelector(selectUserRole);
 
 	useEffect(() => {
-		dispatch(getGroupsAsync());
-	}, [dispatch]);
+		if(roleId === ROLE.ADMIN){
+			dispatch(getGroupsAsync());
+		}
+	}, [dispatch, roleId]);
 
 	const handleOpenModal = () => {
 		setIsModalOpen(true);
