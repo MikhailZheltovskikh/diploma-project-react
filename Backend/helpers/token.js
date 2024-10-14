@@ -6,7 +6,10 @@ module.exports = {
     generate(data) {
         return jwt.sign(data, sign, { expiresIn: '30d' });
     },
-    verify(token){
-        return jwt.verify(token, sign)
-    }
+    verify(token) {
+        if (!token) {
+            throw new Error('Invalid token');
+        }
+        return jwt.verify(token, sign);
+    },
 };
