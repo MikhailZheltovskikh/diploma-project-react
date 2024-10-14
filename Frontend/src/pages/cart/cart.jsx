@@ -60,7 +60,7 @@ const CartContainer = ({ className }) => {
 						maxWidth="200px"
 						margin="10px 0 0 auto"
 					>
-						Отчистить корзину
+						Очистить корзину
 					</Button>
 				)}
 
