@@ -7,6 +7,7 @@ const ButtonLinkContainer = ({ className, children, ...props }) => {
 };
 
 export const ButtonLink = styled(ButtonLinkContainer)`
+    display: inline-block;
 	padding: 16px 30px;
 	font-size: 16px;
 	line-height: 16px;

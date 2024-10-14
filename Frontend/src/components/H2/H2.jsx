@@ -14,6 +14,6 @@ export const H2 = styled(H2Container)`
 `;
 
 H2.propTypes = {
-	children: PropType.node.isRequired,
+	children: PropType.oneOfType([PropType.string, PropType.node]),
 	color: PropType.string,
 };

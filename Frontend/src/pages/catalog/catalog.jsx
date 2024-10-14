@@ -2,6 +2,7 @@ import {
 	ContentContainer,
 	Filter,
 	H2,
+	H3,
 	Loader,
 	Pagination,
 	Search,
@@ -60,18 +61,32 @@ const CatalogContainer = ({ className }) => {
 									? groups.find((group) => group.id === params.id)?.name
 									: 'Каталог'}
 							</H2>
-							<Filter setPriceSort={setPriceSort} />
-							{products.map(
-								({ id, title, image_url, description, price }) => (
-									<ProductsCard
-										id={id}
-										key={id}
-										title={title}
-										image_url={image_url}
-										description={description}
-										price={price}
-									/>
-								),
+							{products < 1 ? (
+								<H3 className="subtitle">
+									Товаров в выбранной группе нет
+								</H3>
+							) : (
+								<>
+									<Filter setPriceSort={setPriceSort} />
+									{products.map(
+										({
+											id,
+											title,
+											image_url,
+											description,
+											price,
+										}) => (
+											<ProductsCard
+												id={id}
+												key={id}
+												title={title}
+												image_url={image_url}
+												description={description}
+												price={price}
+											/>
+										),
+									)}
+								</>
 							)}
 						</>
 					)}
@@ -89,4 +104,8 @@ export const Catalog = styled(CatalogContainer)`
 	grid-template-columns: 1fr;
 	gap: 35px;
 	margin-top: 40px;
+
+	.subtitle {
+		text-align: center;
+	}
 `;

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import {
 	AsideBlock,
 	Button,
+	ButtonLink,
 	ContentContainer,
 	H2,
 	H3,
@@ -88,7 +89,18 @@ const CartContainer = ({ className }) => {
 								{totalPrice}₽
 							</H2>
 						</div>
-						<Button className="basekt-aside__order">Оформить заказ</Button>
+						{userId ? (
+							<Button className="basekt-aside__order">
+								Оформить заказ
+							</Button>
+						) : (
+							<div className="btn-block">
+								<TextBlock color="#000">
+									Войдите, что бы оформить заказ
+								</TextBlock>
+								<ButtonLink to="/login">Вход</ButtonLink>
+							</div>
+						)}
 					</AsideBlock>
 				</div>
 			</ContentContainer>
@@ -126,6 +138,7 @@ export const Cart = styled(CartContainer)`
 	.aside__price-box {
 		padding: 0 20px;
 		margin-top: 20px;
+		margin-bottom: 20px;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
@@ -143,5 +156,14 @@ export const Cart = styled(CartContainer)`
 	.subtitle {
 		text-align: center;
 		margin-top: 20px;
+	}
+
+	.btn-block {
+		display: flex;
+		flex-direction: column;
+		row-gap: 5px;
+		align-items: center;
+		padding: 0 10px;
+		text-align: center;
 	}
 `;

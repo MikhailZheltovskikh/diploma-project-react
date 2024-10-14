@@ -78,7 +78,7 @@ const ProductCardContainer = ({ className, id, title, price, image_url }) => {
 						<ButtonIcon onClick={onClickPlus}>
 							<IconInc />
 						</ButtonIcon>
-						<TextBlock>{addedCount} шт</TextBlock>
+						<TextBlock className="count">{addedCount} шт</TextBlock>
 						<ButtonIcon disabled={addedCount <= 1} onClick={onClickMinus}>
 							<IconDecr />
 						</ButtonIcon>
@@ -135,6 +135,10 @@ export const ProductCard = styled(ProductCardContainer)`
 		display: flex;
 		align-items: center;
 		column-gap: 5px;
+	}
+
+	.count {
+		white-space: nowrap;
 	}
 `;
 

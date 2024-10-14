@@ -1,5 +1,6 @@
 const Product = require('../modules/Product');
 const Group = require('../modules/Group');
+const mongoose = require('mongoose');
 
 // add
 async function addProduct(productData) {
@@ -17,19 +18,49 @@ async function addProduct(productData) {
 }
 
 // edit
-async function editProduct(id, product) {
+async function editProduct(id, data) {
     try {
-        const newProduct = await Product.findByIdAndUpdate(id, product, { new: true });
-        return newProduct;
+        const oldProduct = await Product.findById(id);
+
+        if (!oldProduct) {
+            throw new Error('Товар не найден!');
+        }
+
+        await Group.findByIdAndUpdate(oldProduct.group._id, {
+            $pull: { products: id },
+        });
+
+        await Group.findByIdAndUpdate(data.group, {
+            $push: { products: id },
+        });
+
+        const updatedProduct = await Product.findByIdAndUpdate(id, data, { new: true }).populate('group');
+
+        if (!updatedProduct) {
+            throw new Error('Ошибка обновления товара!');
+        }
+
+        return updatedProduct;
     } catch (error) {
         throw new Error(error.message || 'Неизвестная ошибка...');
     }
 }
 
 // delete
-function deleteProduct(id) {
+async function deleteProduct(id) {
     try {
-        return Product.deleteOne({ _id: id });
+        const product = await Product.findById(id);
+        if (!product) {
+            throw new Error('Товар не найден');
+        }
+
+        await Product.deleteOne({ _id: id });
+
+        await Group.findByIdAndUpdate(product.group, {
+            $pull: { products: id },
+        });
+
+        return;
     } catch (error) {
         throw new Error(error.message || 'Неизвестная ошибка...');
     }

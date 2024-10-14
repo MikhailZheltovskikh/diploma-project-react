@@ -16,7 +16,7 @@ import { selectGroup } from '../../../../redux/selectors';
 const CreateProductContainer = ({ className, handleCloseModal, createHandleSubmit }) => {
 	const { groups } = useSelector(selectGroup);
 
-	const groupIdDefault = '670be52b6dca208e2afe640f';
+	const groupIdDefault = '670cba30c0717e0c5eeacfa9';
 
 	const [titleValue, setTitleValue] = useState('');
 	const [groupValue, setGroupValue] = useState(groupIdDefault);
